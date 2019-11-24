@@ -42,13 +42,10 @@ const Ingredients = () => {
     });
   };
   const removeIngredientHandler = id => {
-    setUserIngredients(prevIngredients => 
-      prevIngredients.filter(ingredient =>{
-        return (ingredient.id !== id)
-         //return  ingredient;
-      })
-    );
-   // setFilterUserIngredients(prevIngredients=>userIngredients)
+    const oldIngredientsArray = [...userIngredients];
+    const arrayToUpdate = oldIngredientsArray.filter(ingredient => ingredient.id !== id)
+    setUserIngredients(arrayToUpdate);
+    setFilterUserIngredients(arrayToUpdate)
   };
 
   const searchIngredientHandler = (event) =>{
@@ -56,7 +53,7 @@ const Ingredients = () => {
     let searchString = event.target.value;
     setFilterUserIngredients(prevFilterUserIngredients =>userIngredients);
     setFilterUserIngredients(prevFilterUserIngredients =>prevFilterUserIngredients.filter(ingredient=>
-     ingredient.title.indexOf(searchString)!==-1) 
+     ingredient.title.toLowerCase().includes(searchString.toLowerCase())) 
     )
   }
 
