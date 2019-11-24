@@ -6,7 +6,6 @@ import Search from './Search';
 
 const Ingredients = () => {
   const [userIngredients, setUserIngredients] = useState([]);
-  const [filterUserIngredients,setFilterUserIngredients] = useState([]);
 
   useEffect(()=>{
     fetch('https://react-hooks-62633.firebaseio.com/ingredients.json')
@@ -21,7 +20,6 @@ const Ingredients = () => {
         });
       }
       setUserIngredients(prevIngredients=>recievedIngredients)
-      setFilterUserIngredients(prevIngredients =>recievedIngredients)
     })
   },[])
 
@@ -34,7 +32,7 @@ const Ingredients = () => {
       method:'POST',
       body:JSON.stringify(ingredient),
       headers: {'Content-Type':'application/json'}
-    }).then(responseData =>{
+    }).then(response => response.json()).then(responseData =>{
       setUserIngredients(prevIngredients => [
         ...prevIngredients,
         { id: responseData.name, ...ingredient }
@@ -42,19 +40,17 @@ const Ingredients = () => {
     });
   };
   const removeIngredientHandler = id => {
-    const oldIngredientsArray = [...userIngredients];
-    const arrayToUpdate = oldIngredientsArray.filter(ingredient => ingredient.id !== id)
-    setUserIngredients(arrayToUpdate);
-    setFilterUserIngredients(arrayToUpdate)
+    setUserIngredients(prevIngredients => 
+      prevIngredients.filter(ingredient =>{
+        return (ingredient.id !== id)
+         //return  ingredient;
+      })
+    );
   };
 
-  const searchIngredientHandler = (event) =>{
+  const searchIngredientHandler = (recievedIngredients) =>{
     console.log('In search Handler')
-    let searchString = event.target.value;
-    setFilterUserIngredients(prevFilterUserIngredients =>userIngredients);
-    setFilterUserIngredients(prevFilterUserIngredients =>prevFilterUserIngredients.filter(ingredient=>
-     ingredient.title.toLowerCase().includes(searchString.toLowerCase())) 
-    )
+    setUserIngredients(recievedIngredients);
   }
 
   return (
@@ -63,7 +59,7 @@ const Ingredients = () => {
 
       <section>
         <Search Change ={searchIngredientHandler}></Search>
-        <IngredientList ingredients={filterUserIngredients} onRemoveItem={removeIngredientHandler} />
+        <IngredientList ingredients={userIngredients} onRemoveItem={removeIngredientHandler} />
       </section>
     </div>
   );
