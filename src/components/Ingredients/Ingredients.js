@@ -7,21 +7,6 @@ import Search from './Search';
 const Ingredients = () => {
   const [userIngredients, setUserIngredients] = useState([]);
 
-  useEffect(()=>{
-    fetch('https://react-hooks-62633.firebaseio.com/ingredients.json')
-    .then(response=>response.json())
-    .then(responseData =>{
-      let recievedIngredients =[];
-      for(let key in responseData){
-        recievedIngredients.push({
-          id : key,
-          title : responseData[key].title,
-          amount: responseData[key].amount
-        });
-      }
-      setUserIngredients(prevIngredients=>recievedIngredients)
-    })
-  },[])
 
   useEffect(()=>{
     //console.log('rendering again');
