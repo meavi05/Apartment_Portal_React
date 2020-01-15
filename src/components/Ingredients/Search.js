@@ -4,11 +4,13 @@ import Card from '../UI/Card';
 import './Search.css';
 
 const Search = React.memo(props => {
+  console.log("search.js")
   const [searchString,setSearchString] =  useState('');
   const inputRef=  useRef();
   useEffect(()=>{
-    console.log("RENDERING SEARCH")
-    setTimeout(()=>{
+    console.log("RENDERING SEARCH UseEffect")
+    const timer = setTimeout(()=>{
+      console.dir(searchString +' and '+inputRef.current.value)
       if(searchString === inputRef.current.value){
       fetch('https://react-hooks-62633.firebaseio.com/ingredients.json')
       .then(response=>response.json())
@@ -26,6 +28,7 @@ const Search = React.memo(props => {
         props.Change(recievedIngredients);
        })}
     },500);
+    return ()=>clearTimeout(timer);
   },[searchString])
   return (
     <section className="search">

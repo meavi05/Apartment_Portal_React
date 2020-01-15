@@ -1,9 +1,10 @@
 import React from 'react';
+import Main from './components/Main/main'
 
-import Ingredients from './components/Ingredients/Ingredients';
+
 
 const App = props => {
-  return <Ingredients />;
+  return <Main />;
 };
 
 export default App;

@@ -1,8 +1,8 @@
 --------------------creatinga new repo ----------------------
-curl -u 'USER' https://api.github.com/user/repos -d '{"name":"REPO"}'
+curl -u 'meavi05' https://github.com/meavi05 -d '{"name":"react-hook"}'
 # Remember replace USER with your username and REPO with your repository/application name!
 git remote add origin git@github.com:USER/REPO.git
-git push origin master
+git push origin master  
 --------------------Committing into new Branch from existing branch----------------------
 git checkout -b "new Branch"
 git status
