@@ -1,75 +1,83 @@
-import React, { useState,useEffect } from 'react';
+import React,{ Component, useState,useEffect } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
 import LoadingIndicator from '../UI/LoadingIndicator';
 import ErrorModal from '../UI/ErrorModal';
+import { connect } from 'react-redux';
+import * as  actions from './../../store/action'
 
-const Ingredients = (props) => {
-  const [userIngredients, setUserIngredients] = useState([]);
-  const [loading, setLoading] =useState(false);
-  const [error, setError] =useState();
-
-  useEffect(()=>{
-    //console.log('rendering again');
-  })
-
+class Ingredients extends Component {
+  state = {
+    loading : false,
+    error : ''
+  }
    
-  const removeIngredientHandler = id => {
-    setLoading(true);
+  removeIngredientHandler = id => {
+    this.setState({loading : true});
     fetch(`https://react-hooks-62633.firebaseio.com/ingredients/${id}.json`,{
       method:'DELETE'
     }).then(response=>{
-      setLoading(false);
-      setUserIngredients(prevIngredients => 
-        prevIngredients.filter(ingredient =>{
-          return (ingredient.id !== id)
-           //return  ingredient;
-        })
-      );
-    }).catch(error => {
-      setError(error.message);
+      this.setState({loading : false});
+      this.props.deleteIngredient(id);
+      }).catch(error => {
+      this.setState({error: error.message});
     })
   };
-  const addIngredientHandler = ingredient => {
-    setLoading(true);
+  addIngredientHandler = ingredient => {
+   this.setState({loading : true});
     fetch('https://react-hooks-62633.firebaseio.com/ingredients.json  ',{
       method:'POST',
       body:JSON.stringify(ingredient),
       headers: {'Content-Type':'application/json'}
     }).then(response => response.json()).then(responseData =>{
-      setLoading(false);
-      setUserIngredients(prevIngredients => [
-        ...prevIngredients, 
-        { id: responseData.name, ...ingredient }
-      ]);
+      this.setState({loading : false});
+      this.props.addIngredient(responseData.name,ingredient);
     }).catch(error =>{
-      setError(error.message);
+      this.setState({error: error.message});
     })
   };
   
 
-  const searchIngredientHandler = (recievedIngredients) =>{
+  searchIngredientHandler = (recievedIngredients) =>{
     console.log('In search Handler')
-    setUserIngredients(recievedIngredients);
-    props.ingredients(recievedIngredients);
+    this.props.initIngredients(recievedIngredients);
+    //setUserIngredients(recievedIngredients);
+    this.props.ingredients(recievedIngredients);
   }
-  const closeError=()=>{
-    setError(null);
-    setLoading(false)
+  closeError=()=>{
+    this.setState({error: null});
+    this.setState({loading : false});
   }
-
-  return (
-    <div className="App">
-      {error?<ErrorModal onClose={closeError}>{error}</ErrorModal>:null}
-      <IngredientForm click={addIngredientHandler}  loading = {loading ? <LoadingIndicator/>:null}/>
-      <section>
-        <Search Change ={searchIngredientHandler}></Search>
-        <IngredientList ingredients={userIngredients}  deleteIngredient = {removeIngredientHandler}/>
-      </section>
-    </div>
-  );
+  render(){
+    return (
+      <div className="App">
+        {this.state.error?<ErrorModal onClose={this.state.closeError}>{this.state.error}</ErrorModal>:null}
+        <IngredientForm click={this.addIngredientHandler}  loading = {this.state.loading ? <LoadingIndicator/>:null}/>
+        <section>
+          <Search Change ={this.searchIngredientHandler}></Search>
+             <IngredientList ingredients={this.props.userIngredients}  deleteIngredient = {this.removeIngredientHandler}/>
+        </section>
+      </div>
+    );
+  }
 };
 
-export default Ingredients;
+
+
+const mapStateToProps = state =>{
+  console.log(state)
+  return {
+    userIngredients : state.ingredients
+  };
+}
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    addIngredient : (id,ingredient) => dispatch(actions.addIngredientAction(id,ingredient)),
+    initIngredients : (recievedIngredients) => dispatch(actions.initIngredientsAction(recievedIngredients)),
+    deleteIngredient : (id) => dispatch(actions.deleteIngredientAction(id))
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Ingredients);
+
