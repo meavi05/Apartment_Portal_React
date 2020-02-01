@@ -1,7 +1,6 @@
-import React,{useState,useEffect} from 'react';
+import React from 'react';
 import classes from './Modal.module.css';
 import Backdrop from '../UI/Backdrop'
-import Card from './Card';
 import { Button } from '../../../node_modules/bootstrap-4-react'
 const Modal = (props) => {
     const toggleShow=() =>{

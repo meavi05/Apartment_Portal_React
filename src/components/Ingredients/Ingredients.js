@@ -1,4 +1,4 @@
-import React,{ Component, useState,useEffect } from 'react';
+import React,{ Component } from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
@@ -43,8 +43,6 @@ class Ingredients extends Component {
   searchIngredientHandler = (recievedIngredients) =>{
     console.log('In search Handler')
     this.props.initIngredients(recievedIngredients);
-    //setUserIngredients(recievedIngredients);
-    this.props.ingredients(recievedIngredients);
   }
   closeError=()=>{
     this.setState({error: null});

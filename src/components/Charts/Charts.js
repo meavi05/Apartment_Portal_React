@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, TriangleBar} from 'recharts'
+import {BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid} from 'recharts'
 
 import { scaleOrdinal } from 'd3-scale';
 import { schemeCategory10 } from 'd3-scale-chromatic';

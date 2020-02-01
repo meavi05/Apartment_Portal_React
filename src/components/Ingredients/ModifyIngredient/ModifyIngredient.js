@@ -1,13 +1,9 @@
 import React , {useState} from 'react'
-import CustomModal from '../../UI/Modal'
 import { Modal , Button ,Form } from '../../../../node_modules/bootstrap-4-react'
 
 const ModifyIngredient = (props) =>{
     const [editMode,setEditMode] = useState(false);
    
-    const setModifyIngredientShow = () =>{
-        props.openEditIngredients();
-    }
     const toggleEditMode = () =>{
         setEditMode(!editMode)
     }
