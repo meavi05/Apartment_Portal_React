@@ -39,7 +39,20 @@ class Ingredients extends Component {
     })
   };
   
-
+  updateIngredientHandler = (recievedIngredients) =>{
+    console.log('In update Handler')
+    this.setState({loading : true});
+    fetch(`https://react-hooks-62633.firebaseio.com/ingredients/${recievedIngredients.id}.json`,{
+      method:'PUT',
+      body:JSON.stringify(recievedIngredients),
+      headers: {'Content-Type':'application/json'}
+    }).then(response => response.json()).then(responseData =>{
+      this.setState({loading : false});
+      this.props.updateIngredient(responseData.name,recievedIngredients);
+    }).catch(error =>{
+      this.setState({error: error.message});
+    })
+  }
   searchIngredientHandler = (recievedIngredients) =>{
     console.log('In search Handler')
     this.props.initIngredients(recievedIngredients);
@@ -55,7 +68,7 @@ class Ingredients extends Component {
         <IngredientForm click={this.addIngredientHandler}  loading = {this.state.loading ? <LoadingIndicator/>:null}/>
         <section>
           <Search Change ={this.searchIngredientHandler}></Search>
-             <IngredientList ingredients={this.props.userIngredients}  deleteIngredient = {this.removeIngredientHandler}/>
+             <IngredientList ingredients={this.props.userIngredients} updateIngredient = {this.updateIngredientHandler} deleteIngredient = {this.removeIngredientHandler}/>
         </section>
       </div>
     );

@@ -3,10 +3,15 @@ import { Modal , Button ,Form } from '../../../../node_modules/bootstrap-4-react
 
 const ModifyIngredient = (props) =>{
     const [editMode,setEditMode] = useState(false);
+    const [amount, setAmount] =  useState(props.ingredient && props.ingredient.amount);
    
     const toggleEditMode = () =>{
         setEditMode(!editMode)
     }
+    const closeEditWindow = () =>{
+      setEditMode(false)
+  }
+  //alert(amount)
     console.log("Rendering Modal")
     return (
         <div>
@@ -16,7 +21,7 @@ const ModifyIngredient = (props) =>{
             <Modal.Content>
               <Modal.Header>
                 <Modal.Title>Modal title</Modal.Title>
-                <Modal.Close onClick ={toggleEditMode}>
+                <Modal.Close onClick = {closeEditWindow}>
                   <span aria-hidden="true">&times;</span>
                 </Modal.Close>
               </Modal.Header>
@@ -32,9 +37,11 @@ const ModifyIngredient = (props) =>{
                     </span>
                     {props.ingredient ?
                     <span>
+                
                     { editMode ?
-                    <Form.Input type ="Input" id = 'amount' placeholder = 'amount' defaultValue = {props.ingredient.amount} ></Form.Input>
-                    : props.ingredient && props.ingredient.amount}
+                    <Form.Input type ="Input" id = 'amount'  defaultValue = {props.ingredient.amount} onChange = {e => setAmount(e.target.value)} ></Form.Input>
+                    : props.ingredient && props.ingredient.amount} 
+                    {/* {props.ingredient && props.ingredient.amount} */}
                     </span>
                     :null}
                 </li>
@@ -47,7 +54,7 @@ const ModifyIngredient = (props) =>{
               {
                 editMode ?
                 <>
-                <Button success data-dismiss="modal" onClick= {() => props.deleteIngredient(props.ingredient.id)}>Save</Button>
+                <Button success data-dismiss="modal" onClick= {() => props.updateIngredient({...props.ingredient,amount : amount})}>Save</Button>
                 </>
                 :
                 <>

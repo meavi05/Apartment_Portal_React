@@ -15,10 +15,13 @@ const IngredientList = props => {
   const deleteIngredient = (id) =>{
     props.deleteIngredient(id);
   }
+  const updateIngredient = (ig) =>{
+    props.updateIngredient(ig);
+  }
   return (
     <React.Fragment>
-   <ModifyIngredient showModal = {openIngredient} openEditIngredients = {modifyIngredient}
-   ingredient = {editIngredient} ingredients = {props.ingredients} deleteIngredient={deleteIngredient}  ></ModifyIngredient>
+   <ModifyIngredient
+   ingredient = {editIngredient} deleteIngredient={deleteIngredient} updateIngredient = {updateIngredient}  ></ModifyIngredient>
     <section className="ingredient-list">
       <h2>Loaded Ingredients</h2>
       <ul>
