@@ -48,7 +48,7 @@ class Ingredients extends Component {
       headers: {'Content-Type':'application/json'}
     }).then(response => response.json()).then(responseData =>{
       this.setState({loading : false});
-      this.props.updateIngredient(responseData.name,recievedIngredients);
+      this.props.updateIngredient(responseData.id,recievedIngredients);
     }).catch(error =>{
       this.setState({error: error.message});
     })
@@ -87,7 +87,8 @@ const mapDispatchToProps = (dispatch) =>{
   return {
     addIngredient : (id,ingredient) => dispatch(actions.addIngredientAction(id,ingredient)),
     initIngredients : (recievedIngredients) => dispatch(actions.initIngredientsAction(recievedIngredients)),
-    deleteIngredient : (id) => dispatch(actions.deleteIngredientAction(id))
+    deleteIngredient : (id) => dispatch(actions.deleteIngredientAction(id)),
+    updateIngredient : (id,recievedIngredients) => dispatch(actions.updateIngredientsAction(id,recievedIngredients))
   }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Ingredients);

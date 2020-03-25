@@ -1,7 +1,8 @@
 const initialState = {
     ingredients : [],
     loading : false,
-    error : false
+    error : false,
+    authenicatedUser : false
 }
 
 const reducer = (state=initialState,action) =>{
@@ -19,9 +20,18 @@ const reducer = (state=initialState,action) =>{
             return {...state, ingredients : updatedIngredients}
         }
         case 'UPDATE_INGREDIENT' :{
-            alert("update the ingredients")
-            return state;
+           // alert("update the ingredients")
+                let updatedIngredients = state.ingredients.filter(ing => 
+                    ing.id !==action.id)
+                updatedIngredients = [...updatedIngredients,action.receivedIngredients]
+                return {...state,ingredients : updatedIngredients};
         }
+        case 'AUTHORIZE_USER' :{
+
+                 const newState = {...state,authenicatedUser : !state.authenicatedUser};
+                 console.log(newState);
+                 return newState;
+         }
         default:
         return state;
     }

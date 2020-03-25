@@ -19,3 +19,17 @@ export const initIngredientsAction = (receivedIngredients) =>{
         receivedIngredients : receivedIngredients
     }
 }
+export const updateIngredientsAction = (id,receivedIngredients) =>{
+    return {
+        type : 'UPDATE_INGREDIENT',
+        id : id,
+        receivedIngredients : receivedIngredients
+    }
+}
+    export const authorizeUserAction = () =>{
+       // alert('in action')
+        return {
+            type : 'AUTHORIZE_USER'
+              }
+    }
+    

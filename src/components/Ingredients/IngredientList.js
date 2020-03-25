@@ -5,11 +5,9 @@ import ModifyIngredient from './ModifyIngredient/ModifyIngredient'
 
 const IngredientList = props => {
   console.log('IngredientList')
-  const [openIngredient,setOpenIngredient] = useState(false);
   const [editIngredient,setEditIngredient] =  useState();
 
   const modifyIngredient = (ingredient) =>{
-   setOpenIngredient(!openIngredient);
    setEditIngredient(ingredient);
   }
   const deleteIngredient = (id) =>{

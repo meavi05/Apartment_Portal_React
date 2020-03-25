@@ -1,0 +1,19 @@
+.FrontControllerComponent {
+    /* The image used */
+     background-image: url(../../static/login-bg_1.jpg);
+
+    /* Full height */
+    height: 100vh; 
+
+    /* Center and scale the image nicely */
+     background-position: center; 
+     background-repeat: no-repeat; 
+    background-size: cover;
+}
+
+.Content div {
+    height:20%;
+    background-color: white ;
+    
+    
+}

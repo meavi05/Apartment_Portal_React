@@ -4,9 +4,8 @@ import { createStore, compose } from 'redux';
 import reducer from './store/reducer'
 import { Provider }  from 'react-redux'
 
-import './index.css';
 import App from './App';
-//import '..\node_modules\bootstrap\dist\css\bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, composeEnhancers());

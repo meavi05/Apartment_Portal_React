@@ -1,10 +1,10 @@
 import React from 'react';
-import Main from './components/Main/main'
-
+import FrontController from './components/FrontController/FrontController'
 
 
 const App = props => {
-  return <Main />;
+  return (
+   <FrontController></FrontController>)
 };
 
 export default App;

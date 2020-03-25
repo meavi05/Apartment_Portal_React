@@ -11,12 +11,14 @@ const ModifyIngredient = (props) =>{
     const closeEditWindow = () =>{
       setEditMode(false)
   }
-  //alert(amount)
+  const updateIngredient = () =>{
+    setEditMode(false);
+    props.updateIngredient({...props.ingredient,amount : amount})
+  }
+    //alert(amount)
     console.log("Rendering Modal")
     return (
-        <div>
-        {/* <CustomModal show ={props.showModal} ingredient = {props.ingredient} setModalShow = {setModifyIngredientShow}></CustomModal> */}
-        <Modal id="largeModal" fade>
+        <div><Modal id="largeModal" fade>
           <Modal.Dialog lg>
             <Modal.Content>
               <Modal.Header>
@@ -41,7 +43,6 @@ const ModifyIngredient = (props) =>{
                     { editMode ?
                     <Form.Input type ="Input" id = 'amount'  defaultValue = {props.ingredient.amount} onChange = {e => setAmount(e.target.value)} ></Form.Input>
                     : props.ingredient && props.ingredient.amount} 
-                    {/* {props.ingredient && props.ingredient.amount} */}
                     </span>
                     :null}
                 </li>
@@ -54,7 +55,7 @@ const ModifyIngredient = (props) =>{
               {
                 editMode ?
                 <>
-                <Button success data-dismiss="modal" onClick= {() => props.updateIngredient({...props.ingredient,amount : amount})}>Save</Button>
+                <Button success data-dismiss="modal" onClick=  {updateIngredient}>Save</Button>
                 </>
                 :
                 <>
