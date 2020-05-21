@@ -18,8 +18,9 @@ const ModifyIngredient = (props) =>{
     //alert(amount)
     console.log("Rendering Modal")
     return (
-        <div><Modal id="largeModal" fade>
-          <Modal.Dialog lg>
+        <div>
+          <Modal id="largeModal" fade>
+           <Modal.Dialog lg>
             <Modal.Content>
               <Modal.Header>
                 <Modal.Title>Modal title</Modal.Title>
@@ -62,11 +63,11 @@ const ModifyIngredient = (props) =>{
                 <Button danger data-dismiss="modal" onClick= {() => props.deleteIngredient(props.ingredient.id)}>Delete</Button>
                 <Button primary onClick = {toggleEditMode}>Edit</Button>
                 </>
-                }
+                } 
               </Modal.Footer>
             </Modal.Content>
           </Modal.Dialog>
-        </Modal>
+        </Modal> 
         </div>
     )
 }

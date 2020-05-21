@@ -1,7 +1,7 @@
 import React from 'react';
 import Ingredients from '../Ingredients/Ingredients';
 import Charts from '../Charts/Charts'
-import { Container, Row, Col } from 'bootstrap-4-react';
+import {Row, Col } from 'bootstrap-4-react';
 import { connect } from 'react-redux';
 
 

@@ -1,0 +1,30 @@
+.SignUp {
+   
+}
+.SignUp input {
+    width: 60%;
+    padding: 10px 10px;
+    margin: 5px 0;
+  box-sizing: border-box;
+}
+.SignUp input :focus-within {
+    border: 3px solid #555;
+}
+
+.SignUp input[type=radio] {
+    width: 5%;
+    
+}
+.SignUp radio[type=date] {
+    width: 5%;
+    padding: 10px 10px;
+    margin: 5px 0;
+  box-sizing: border-box;
+}
+
+.SignUp select {
+    width: 60%;
+    padding: 10px 10px;
+    margin: 5px 0;
+  box-sizing: border-box;
+}

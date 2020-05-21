@@ -4,8 +4,9 @@ import Card from '../UI/Card';
 import './Search.css';
 
 const Search = React.memo(props => {
-  console.log("search.js")
+  console.log("REDNERING Search")
   const [searchString,setSearchString] =  useState('');
+  const {Change} = props
   const inputRef=  useRef();
   useEffect(()=>{
     console.log("RENDERING SEARCH UseEffect")
@@ -25,11 +26,11 @@ const Search = React.memo(props => {
         }
         recievedIngredients = recievedIngredients.filter(ingredient=>
         ingredient.title.toLowerCase().indexOf(searchString.toLowerCase())!==-1) 
-        props.Change(recievedIngredients);
+        Change(recievedIngredients);
        })}
     },500);
     return ()=>clearTimeout(timer);
-  },[searchString])
+  },[searchString,Change])
   return (
     <section className="search">
       <Card>

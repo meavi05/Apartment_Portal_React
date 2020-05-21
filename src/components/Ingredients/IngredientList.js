@@ -4,7 +4,7 @@ import './IngredientList.css';
 import ModifyIngredient from './ModifyIngredient/ModifyIngredient'
 
 const IngredientList = props => {
-  console.log('IngredientList')
+  console.log('RENDERING IngredientList')
   const [editIngredient,setEditIngredient] =  useState();
 
   const modifyIngredient = (ingredient) =>{

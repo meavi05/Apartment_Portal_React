@@ -38,6 +38,7 @@ class Ingredients extends Component {
       this.setState({error: error.message});
     })
   };
+
   
   updateIngredientHandler = (recievedIngredients) =>{
     console.log('In update Handler')
@@ -62,6 +63,7 @@ class Ingredients extends Component {
     this.setState({loading : false});
   }
   render(){
+    console.log('RENDERING Ingredients')
     return (
       <div className="App">
         {this.state.error?<ErrorModal onClose={this.state.closeError}>{this.state.error}</ErrorModal>:null}
