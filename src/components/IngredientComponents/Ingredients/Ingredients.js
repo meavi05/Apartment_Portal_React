@@ -3,10 +3,10 @@ import React,{ Component } from 'react';
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
 import Search from './Search';
-import LoadingIndicator from '../UI/LoadingIndicator';
-import ErrorModal from '../UI/ErrorModal';
+import LoadingIndicator from '../../UI/LoadingIndicator';
+import ErrorModal from '../../UI/ErrorModal';
 import { connect } from 'react-redux';
-import * as  actions from './../../store/action'
+import * as  actions from '../../../store/action'
 
 class Ingredients extends Component {
   state = {

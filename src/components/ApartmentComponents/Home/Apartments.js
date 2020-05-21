@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {Button,Table} from 'react-bootstrap'
-import * as actions from './../../store/action'
+import * as actions from '../../../store/action'
 const Apartments = (props) => {
     const onClickHandler = (element,apartmentId) => {
         switch (element) {

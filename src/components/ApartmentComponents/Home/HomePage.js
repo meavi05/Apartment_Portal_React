@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import TenantForm from '../Tenant/TenantForm'
-import AddApartmentForm from '../AddApartmentForm/AddApartmentForm'
+import TenantForm from './../Forms/TenantForm'
+import AddApartmentForm from './../Forms/AddApartmentForm'
 import Apartments from './Apartments'
 import Tenants from './Tenants'
 import { Button, Row, Col, Container } from 'react-bootstrap'
 import { ButtonGroup,Breadcrumb,BreadcrumbItem } from 'reactstrap'
 import { connect,useDispatch } from 'react-redux'
-import * as actions from '../../store/action'
+import * as actions from '../../../store/action'
 const HomePage = (props) => {
     console.log('RENDERING HOMEPAGE..')
     const [rSelected, setRSelected] = useState(null);

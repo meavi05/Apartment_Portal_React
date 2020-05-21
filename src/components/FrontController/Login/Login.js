@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import CustomModal from '../UI/CustomModal'
+import CustomModal from '../../UI/CustomModal'
 
 const Login = (props) => {
     console.log("Rendering Modal")

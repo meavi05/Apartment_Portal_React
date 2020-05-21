@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
-import CustomModal from '../UI/CustomModal'
+import CustomModal from '../../UI/CustomModal'
 import Classes from '../SignUp/SignUp.module.css'
 
 class SignUp extends Component {

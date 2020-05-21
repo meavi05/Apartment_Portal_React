@@ -1,5 +1,5 @@
 import React , {useState} from 'react'
-import { Modal , Button ,Form } from '../../../../node_modules/bootstrap-4-react'
+import { Modal , Button ,Form } from 'bootstrap-4-react'
 
 const ModifyIngredient = (props) =>{
     const [editMode,setEditMode] = useState(false);

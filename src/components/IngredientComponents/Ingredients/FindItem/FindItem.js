@@ -1,9 +1,9 @@
 import React from 'react'
-import Search from '../Ingredients/Search'
-import IngredientList from '../Ingredients/IngredientList'
-import CustomModal from '../UI/CustomModal'
+import Search from '../Search'
+import IngredientList from '../IngredientList'
+import CustomModal from '../../../UI/CustomModal'
 import {connect,useDispatch} from 'react-redux'
-import * as  actions from './../../store/action'
+import * as  actions from '../../../../store/action'
 
 const FindItem = (props) => {
     console.log("Rendering FindItem")
