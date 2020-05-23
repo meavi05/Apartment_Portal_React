@@ -37,8 +37,8 @@ class FrontController extends Component {
         console.log('RENDERING FRONT CONTROLLER')
         return (
         <Container fluid>
-            <Row>
-                <Col md="7"> <h2 align="center">The Apartment Portal</h2></Col>
+            <Row style={{height:"50px"}}>
+                <Col md="7"> <h2 align="center" style={{color:'white'}}>The Apartment Portal</h2></Col>
                 <Col align='right'>
                         {!this.props.isAuthenticated ? <>
                             <Button variant="primary" onClick={() => this.handleShow('showLogin')}>Login  </Button>
@@ -53,7 +53,11 @@ class FrontController extends Component {
                 {!this.props.isAuthenticated ? <Row><Col>
                  {/* </Col>
                  <Col> */}
-                 <br></br><br></br>
+                 <br></br>
+                 <Alert variant="primary">
+                            The idea behind creating this Apartment Portal is to have the transparency and clear view of the Apartment.
+                 </Alert>
+                 {/* <br></br> */}
                         <Carousel>
                             <Carousel.Item>
                                 <img
@@ -75,11 +79,6 @@ class FrontController extends Component {
                             </Carousel.Item>
                         </Carousel>
                          <br></br>
-                        <Alert variant="primary">jdflsdlkfjdsklfjdsklfjdsklfjdklsfjdkslfjdklsf
-                                    dfjdskfjsdkfjdskfldsfjdsklfjdsklfdks
-                                    jdsfdlsfjdslkfjdsklfjdskfl
-                                    kjsfkldsjfdskljfdsklfdsj
-                                </Alert>
                     </Col><Col><Info/></Col>
                    
             </Row>:null

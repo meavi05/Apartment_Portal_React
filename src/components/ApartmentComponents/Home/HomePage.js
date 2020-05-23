@@ -5,7 +5,7 @@ import { ButtonGroup, Breadcrumb, BreadcrumbItem } from 'reactstrap'
 import { connect, useDispatch } from 'react-redux'
 
 const HomePage = (props) => {
-    console.log('RENDERING HOMEPAGE..')
+    console.log('RENDERING HOMEPAGE')
     const [rSelected, setRSelected] = useState(null);
     const [showTenants, setShowTenants] = useState(false)
     const [showApartment, setShowApartment] = useState(true)
@@ -66,7 +66,7 @@ const HomePage = (props) => {
         console.log(tenants)
     }
     return (
-        <Row style={{ height: '35rem' }}>
+        <Row>
             <Col md="3">
                 <Card style={{ width: '5rem', height: '5rem' }}>
                     <Card.Img variant="top" width={50} height={50} />
