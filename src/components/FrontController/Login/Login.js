@@ -3,7 +3,7 @@ import CustomModal from '../../UI/CustomModal'
 
 const Login = (props) => {
     console.log("Rendering Modal")
-    const [mailId,setEmail] =  useState('')
+    const [mailId,setEmail] =  useState('meavinash05@gmail.com')
     const [password,setPassword] = useState('')
     const authorizeUser = (e) => {
         e.preventDefault()
@@ -17,7 +17,7 @@ const Login = (props) => {
     const form = (<form>
     <div className="form-group">
         <label>Email address</label>
-        <input type="email" className="form-control" placeholder="Enter email" onChange = {(e)=>changeHandler(e,'email')}/>
+        <input type="email" defaultValue ='meavinash05@gmail.com' className="form-control" placeholder="Enter email" onChange = {(e)=>changeHandler(e,'email')}/>
     </div>
 
     <div className="form-group">

@@ -3,7 +3,7 @@ import {Button,Table} from 'react-bootstrap'
 const Tenants = (props) =>{
     return(
         props.show ? <><h3 style={{color:'white'}}>For {props.apartmentName} Apartments:</h3><br></br>
-        <Table striped bordered hover variant="dark">
+        <Table striped bordered hover variant="dark" responsive>
   <thead>
     <tr>
       <th>Tenant Name</th>
@@ -13,7 +13,6 @@ const Tenants = (props) =>{
   </thead>
   <tbody>{
     props.tenants.map(tenant => {
-    {
             return  (          
             <tr style={{color:'white'}}>
                 <td>{tenant.tenantName}</td>
@@ -21,7 +20,6 @@ const Tenants = (props) =>{
                 <td>{tenant.mobile}</td>
                 <td><Button  variant="light">Edit</Button></td>
                 </tr>)
-    }
 })
 }
   </tbody>

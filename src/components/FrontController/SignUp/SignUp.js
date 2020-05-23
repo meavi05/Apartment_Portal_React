@@ -49,7 +49,7 @@ class SignUp extends Component {
             }
 
             case 'emailId': {
-                const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+                const pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
                 const result = pattern.test(value);
                 if (result) {
                     this.setState({

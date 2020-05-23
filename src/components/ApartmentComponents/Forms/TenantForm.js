@@ -67,8 +67,8 @@ const renderField = ({
         <div>
           <Input {...input} placeholder={label} type={type}>
           <option value="">Select Apartment</option>
-            {apartments.map(apartment=>{
-             return( <option value = {apartment.apartmentId}>{apartment.apartmentName}</option>)
+            {apartments.map((apartment,index)=>{
+             return( <option key = {index} value = {apartment.apartmentId}>{apartment.apartmentName}</option>)
             })}
           </Input>
           {touched &&

@@ -56,10 +56,10 @@ const reducer = (state = initialState, action) => {
             return {...state,userData:updatedUserData,apartments:userApartments}
         }
         case 'ADD_TENANT_SUCCESS' :{
-            const apartment = [...state.userData.apartments].find(apartment=>apartment.apartmentId ==   action.obj.apartment.apartmentId)
+            const apartment = [...state.userData.apartments].find(apartment=>apartment.apartmentId.toString() ===   action.obj.apartment.apartmentId)
             const newTenants = [...apartment.testtenants,action.obj]
             const updatedApartment = {...apartment,testtenants:newTenants}
-            const tempApartments = [...state.userData.apartments].filter(apartment=>apartment.apartmentId !=   action.obj.apartment.apartmentId)
+            const tempApartments = [...state.userData.apartments].filter(apartment=>apartment.apartmentId.toString() !==   action.obj.apartment.apartmentId)
             const updatedUserApartmentsUnderUser = [...tempApartments,updatedApartment]
             const updatedUserData = {...state.userData,apartments:updatedUserApartmentsUnderUser}
             return {...state,userData:updatedUserData,apartments:updatedUserApartmentsUnderUser}
