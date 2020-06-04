@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/react-hook/static/css/main.f558960b.chunk.css",
+    "main.js": "/react-hook/static/js/main.b4742d58.chunk.js",
+    "main.js.map": "/react-hook/static/js/main.b4742d58.chunk.js.map",
+    "runtime~main.js": "/react-hook/static/js/runtime~main.57a484b9.js",
+    "runtime~main.js.map": "/react-hook/static/js/runtime~main.57a484b9.js.map",
+    "static/css/2.17e5ed98.chunk.css": "/react-hook/static/css/2.17e5ed98.chunk.css",
+    "static/js/2.871dffdf.chunk.js": "/react-hook/static/js/2.871dffdf.chunk.js",
+    "static/js/2.871dffdf.chunk.js.map": "/react-hook/static/js/2.871dffdf.chunk.js.map",
+    "index.html": "/react-hook/index.html",
+    "precache-manifest.fb4031d6253cf7935e6a95021b04d0f1.js": "/react-hook/precache-manifest.fb4031d6253cf7935e6a95021b04d0f1.js",
+    "service-worker.js": "/react-hook/service-worker.js",
+    "static/css/2.17e5ed98.chunk.css.map": "/react-hook/static/css/2.17e5ed98.chunk.css.map",
+    "static/css/main.f558960b.chunk.css.map": "/react-hook/static/css/main.f558960b.chunk.css.map",
+    "static/media/Avinash.jpg": "/react-hook/static/media/Avinash.f4c91351.jpg",
+    "static/media/apartment1.jpg": "/react-hook/static/media/apartment1.3a2a6070.jpg",
+    "static/media/apartment2.jpg": "/react-hook/static/media/apartment2.cc04c99f.jpg",
+    "static/media/apartment3.jpg": "/react-hook/static/media/apartment3.a86bd3f8.jpg"
+  }
+}
