@@ -28,7 +28,7 @@ class FrontController extends Component {
     signUpHandler = (userData) => {
         alert('Front Controller Sign Up Handler')
         console.log(userData)
-        fetch('http://localhost:8080/addUser', {
+        fetch('https://apartmentportal.herokuapp.com/addUser', {
             method: 'POST',
             body: JSON.stringify(userData),
             headers: { 'Content-Type': 'application/json' }
