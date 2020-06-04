@@ -2,6 +2,7 @@ import React from 'react'
 // import {Button} from 'react-bootstrap'
 import { Input, Button } from 'reactstrap'
 import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
 
 const validate = values => {
   const errors = {}
@@ -42,12 +43,14 @@ const renderField = ({
   input,
   label,
   type,
+  disabled,
+  hidden,
   meta: { touched, error, warning }
 }) => (
-    <div>
+    <div hidden={hidden}>
       <label><b>{label}</b></label>
       <div>
-        <Input {...input} placeholder={label} type={type} />
+        <Input {...input} placeholder={label} type={type} disabled={disabled} />
         {touched &&
           ((error && <span style={{ color: 'black' }}>{error}</span>) ||
             (warning && <span>{warning}</span>))}
@@ -55,45 +58,53 @@ const renderField = ({
     </div>
   )
 
-  const select = ({
-    input,
-    apartments,
-    label,
-    type,
-    meta: { touched, error, warning }
-  }) => (
+const select = ({
+  input,
+  apartments,
+  label,
+  type,
+  meta: { touched, error, warning }
+}) => (
+    <div>
+      <label><b>{label}</b></label>
       <div>
-        <label><b>{label}</b></label>
-        <div>
-          <Input {...input} placeholder={label} type={type}>
+        <Input {...input} placeholder={label} type={type}>
           <option value="">Select Apartment</option>
-            {apartments.map((apartment,index)=>{
-             return( <option key = {index} value = {apartment.apartmentId}>{apartment.apartmentName}</option>)
-            })}
-          </Input>
-          {touched &&
-            ((error && <span style={{ color: 'black' }}>{error}</span>) ||
-              (warning && <span>{warning}</span>))}
-        </div>
+          {apartments.map((apartment, index) => {
+            return (<option key={index} value={apartment.apartmentId}>{apartment.apartmentName}</option>)
+          })}
+        </Input>
+        {touched &&
+          ((error && <span style={{ color: 'black' }}>{error}</span>) ||
+            (warning && <span>{warning}</span>))}
       </div>
-    )
+    </div>
+  )
 
-const TenantForm = props => {
-  const { handleSubmit, pristine, reset, submitting } = props
+let TenantForm = props => {
+  const { handleSubmit, pristine, reset, submitting, isAddForm } = props
   return (
     props.show ?
       <form onSubmit={handleSubmit}>
         <Field
+          name="tenantId"
+          type="number"
+          component={renderField}
+          label="TenantId"
+          hidden
+        />
+        <Field
           name="tenantName"
           type="text"
           component={renderField}
-          label="tenantName"
+          label="TenantName"
         />
         <Field
           name="email"
           type="email"
           component={renderField}
           label="Email"
+          disabled={!isAddForm ? true : false}
         />
         <Field
           name="age"
@@ -101,15 +112,22 @@ const TenantForm = props => {
           component={renderField}
           label="Age"
         />
-                <Field name="apartmentName" component={select} type = "select" apartments = {props.apartments}
-                label="Apartment Name">
-          </Field>
+        <Field
+          name="mobile"
+          type="number"
+          component={renderField}
+          label="Mobile"
+        />
+        {isAddForm ?
+          <Field name="apartmentName" component={select} type="select" apartments={props.apartments}
+            label="Apartment Name">
+          </Field> : null}
         <br></br>
         <div>
 
           <Button type="submit" color="primary" size="md" disabled={submitting}>
-            Submit
-        </Button>
+            {isAddForm ? 'Add Tenant' : 'Update'}
+          </Button>
           <Button type="button" color="danger" disabled={pristine || submitting} onClick={reset}>
             Clear Values
         </Button>
@@ -117,9 +135,19 @@ const TenantForm = props => {
       </form> : null
   )
 }
-
-export default reduxForm({
+TenantForm = reduxForm({
   form: 'Tenant', // a unique identifier for this form
-  validate, // <--- validation function given to redux-form
-  warn // <--- warning function given to redux-form
+  validate,
+  warn,
+  enableReinitialize: true,
+  // destroyOnUnmount: false,
 })(TenantForm)
+
+TenantForm = connect(
+  state => ({
+    initialValues: state.app.tenant
+    // pull initial values from account reducer
+  })
+)(TenantForm)
+
+export default TenantForm

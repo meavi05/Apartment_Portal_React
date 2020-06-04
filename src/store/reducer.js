@@ -4,9 +4,11 @@ const initialState = {
     error: false,
     authenicatedUser: false,
     userData: {
-        apartments:[]
+        apartments: []
     },
-    apartments:[]
+    apartments: [],
+    tenant: {
+    }
 }
 
 const reducer = (state = initialState, action) => {
@@ -43,28 +45,48 @@ const reducer = (state = initialState, action) => {
             return newState;
         }
         case 'UPDATE_USER_DATA': {
-            const newState = { ...state, userData: action.userData,apartments:action.userData.apartments};
+            const newState = { ...state, userData: action.userData, apartments: action.userData.apartments };
             console.log(newState);
             return newState;
         }
-        case 'ADD_APARTMENT_SUCCESS' :{
-            const apartmentsUnderUser = [...state.userData.apartments]
-            const updatedUserApartmentsUnderUser = [...apartmentsUnderUser,action.obj]
-            console.log(updatedUserApartmentsUnderUser);
-            const updatedUserData = {...state.userData,apartments:updatedUserApartmentsUnderUser}
-            const userApartments = [...state.apartments,action.obj]
-            return {...state,userData:updatedUserData,apartments:userApartments}
+        case 'UPDATE_TENANT_DATA': {
+            const newState = { ...state, tenant: action.tenantData };
+            console.log(newState);
+            return newState;
         }
-        case 'ADD_TENANT_SUCCESS' :{
-            const apartment = [...state.userData.apartments].find(apartment=>apartment.apartmentId.toString() ===   action.obj.apartment.apartmentId)
-            const newTenants = [...apartment.testtenants,action.obj]
-            const updatedApartment = {...apartment,testtenants:newTenants}
-            const tempApartments = [...state.userData.apartments].filter(apartment=>apartment.apartmentId.toString() !==   action.obj.apartment.apartmentId)
-            const updatedUserApartmentsUnderUser = [...tempApartments,updatedApartment]
-            const updatedUserData = {...state.userData,apartments:updatedUserApartmentsUnderUser}
-            return {...state,userData:updatedUserData,apartments:updatedUserApartmentsUnderUser}
-           // return {...state.userData,aprartments:updatedUserApartmentsUnderUser} 
-          // return state
+        case 'ADD_APARTMENT_SUCCESS': {
+            const apartmentsUnderUser = [...state.userData.apartments]
+            const updatedUserApartmentsUnderUser = [...apartmentsUnderUser, action.obj]
+            console.log(updatedUserApartmentsUnderUser);
+            const updatedUserData = { ...state.userData, apartments: updatedUserApartmentsUnderUser }
+            const userApartments = [...state.apartments, action.obj]
+            return { ...state, userData: updatedUserData, apartments: userApartments }
+        }
+        case 'ADD_TENANT_SUCCESS': {
+            const apartment = [...state.userData.apartments].find(apartment => apartment.apartmentId.toString() === action.obj.apartment.apartmentId.toString())
+            const removeExistingTenant = apartment.testtenants.filter(tenant => tenant.tenantId.toString() !== action.obj.tenantId.toString())
+            const newTenants = [...removeExistingTenant, action.obj]
+            const updatedApartment = { ...apartment, testtenants: newTenants }
+            const tempApartments = [...state.userData.apartments].filter(apartment => apartment.apartmentId.toString() !== action.obj.apartment.apartmentId.toString())
+            const updatedUserApartmentsUnderUser = [...tempApartments, updatedApartment]
+            const updatedUserData = { ...state.userData, apartments: updatedUserApartmentsUnderUser }
+            return { ...state, userData: updatedUserData, apartments: updatedUserApartmentsUnderUser }
+            // return {...state.userData,aprartments:updatedUserApartmentsUnderUser} 
+            // return state
+        }
+        case 'DELETE_TENANT_SUCCESS': {
+            const apartment = [...state.userData.apartments].find(apartment => apartment.apartmentId.toString() === action.apartmentId.toString())
+            const deleteExistingTenant = apartment.testtenants.filter(tenant => tenant.email !== action.email)
+            const updatedApartment = { ...apartment, testtenants: deleteExistingTenant }
+            const tempApartments = [...state.userData.apartments].filter(apartment => apartment.apartmentId.toString() !== action.apartmentId.toString())
+            const updatedUserApartmentsUnderUser = [...tempApartments, updatedApartment]
+            const updatedUserData = { ...state.userData, apartments: updatedUserApartmentsUnderUser }
+            return { ...state, userData: updatedUserData, apartments: updatedUserApartmentsUnderUser }
+            // return {...state.userData,aprartments:updatedUserApartmentsUnderUser} 
+            // return state
+        }
+        case 'LOGOUT_ACTION': {
+            return { ...state, authenicatedUser: false }
         }
         default:
             return state;

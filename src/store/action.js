@@ -1,77 +1,88 @@
-export const deleteIngredientAction = (id) =>{
+export const deleteIngredientAction = (id) => {
     return {
-        type : 'DELETE_INGREDIENT',
-        id : id
+        type: 'DELETE_INGREDIENT',
+        id: id
     }
 }
 
-export const addIngredientAction = (id,ingredient) =>{
+export const addIngredientAction = (id, ingredient) => {
     return {
-        type : 'ADD_INGREDIENT',
-        id : id,
-        ingredient : ingredient
+        type: 'ADD_INGREDIENT',
+        id: id,
+        ingredient: ingredient
     }
 }
 
-export const initIngredientsAction = (receivedIngredients) =>{
+export const initIngredientsAction = (receivedIngredients) => {
     return {
-        type : 'INIT_INGREDIENTS',
-        receivedIngredients : receivedIngredients
+        type: 'INIT_INGREDIENTS',
+        receivedIngredients: receivedIngredients
     }
 }
-export const updateIngredientsAction = (id,receivedIngredients) =>{
+export const updateIngredientsAction = (id, receivedIngredients) => {
     return {
-        type : 'UPDATE_INGREDIENT',
-        id : id,
-        receivedIngredients : receivedIngredients
+        type: 'UPDATE_INGREDIENT',
+        id: id,
+        receivedIngredients: receivedIngredients
     }
 }
 
 export const authorizeUserSuccess = (email) => {
     return {
-        type : 'AUTHORIZE_USER_SUCCESS'
+        type: 'AUTHORIZE_USER_SUCCESS'
     }
 }
 export const authorizeUserFailed = () => {
     return {
-        type : 'AUTHORIZE_USER_FAILED'
+        type: 'AUTHORIZE_USER_FAILED'
     }
 }
 export const updateUserData = (userData) => {
     return {
-        type :'UPDATE_USER_DATA',
-        userData : userData
+        type: 'UPDATE_USER_DATA',
+        userData: userData
     }
 }
-export const  loadDataForUser = (email) => {
+export const updateTenant = (tenantData) => {
+    return {
+        type: 'UPDATE_TENANT_DATA',
+        tenantData: tenantData
+    }
+}
+export const logOutAction = () => {
+    return {
+        type: 'LOGOUT_ACTION'
+    }
+}
+export const loadDataForUser = (email) => {
     return (dispatch) => {
         var url = `http://localhost:8080/getUserData/${email}`
-       fetch(url, {
+        fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         }).then(response => response.json()).then(
-          responseData => {
+            responseData => {
                 console.log(responseData)
                 dispatch(updateUserData(responseData))
-          }
+            }
         )
-        .catch(error => {
-            alert('Error Occurred while fetching user Data')
-        })
+            .catch(error => {
+                alert('Error Occurred while fetching user Data')
+            })
 
-    } 
+    }
 }
 
-export function authorizeUserAction(email,password){
-   // return function(dispatch){
-       return dispatch => {
-       // alert('in action')
-       var obj = {email:email,password:password}
-       fetch('http://localhost:8080/authorizeUser', {
+export function authorizeUserAction(email, password) {
+    // return function(dispatch){
+    return dispatch => {
+        // alert('in action')
+        var obj = { email: email, password: password }
+        fetch('http://localhost:8080/authorizeUser', {
             method: 'POST',
             body: JSON.stringify(obj),
             headers: { 'Content-Type': 'application/json' }
-        }).then(response =>{
+        }).then(response => {
             dispatch(authorizeUserSuccess())
             dispatch(loadDataForUser(email))
         }).catch(error => {
@@ -79,18 +90,18 @@ export function authorizeUserAction(email,password){
             dispatch(authorizeUserFailed)
         })
 
-    } 
-    
+    }
+
 }
 export const addApartmentSuccess = (obj) => {
     return {
-        type :'ADD_APARTMENT_SUCCESS',
-        obj : obj
+        type: 'ADD_APARTMENT_SUCCESS',
+        obj: obj
     }
 }
 export const addApartmentFailed = () => {
     return {
-        type :'ADD_APARTMENT_FAILED',
+        type: 'ADD_APARTMENT_FAILED',
     }
 }
 export const addApartmentAction = (values) => {
@@ -99,17 +110,17 @@ export const addApartmentAction = (values) => {
         // alert('in action')
         var obj = values
         fetch('http://localhost:8080/addApartment', {
-             method: 'POST',
-             body: JSON.stringify(obj),
-             headers: { 'Content-Type': 'application/json' }
-         }).then(response =>response.json()).then(responseData => {
-             dispatch(addApartmentSuccess(responseData))
-         }).catch(error => {
-             alert(error.message)
-             dispatch(addApartmentFailed())
-         })
- 
-     } 
+            method: 'POST',
+            body: JSON.stringify(obj),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(response => response.json()).then(responseData => {
+            dispatch(addApartmentSuccess(responseData))
+        }).catch(error => {
+            alert(error.message)
+            dispatch(addApartmentFailed())
+        })
+
+    }
 }
 export const addTenantAction = (values) => {
 
@@ -117,49 +128,75 @@ export const addTenantAction = (values) => {
         // alert('in action')
         var obj = values
         fetch('http://localhost:8080/addTenant', {
-             method: 'POST',
-             body: JSON.stringify(obj),
-             headers: { 'Content-Type': 'application/json' }
-         }).then(response =>response.json()).then(responseData => {
-             dispatch(addTenantSuccess(obj))
-         }).catch(error => {
-             alert(error.message)
-             dispatch(addTenantFailed())
-         })
- 
-     } 
+            method: 'POST',
+            body: JSON.stringify(obj),
+            headers: { 'Content-Type': 'application/json' }
+        }).then(response => response.json()).then(responseData => {
+            dispatch(addTenantSuccess({ ...obj, ...responseData }))
+        }).catch(error => {
+            alert(error.message)
+            dispatch(addTenantFailed())
+        })
+
+    }
+}
+export const deleteTenant = (email, apartmentId) => {
+    return dispatch => {
+        fetch(`http://localhost:8080/deleteTenant/${email}`, {
+            method: 'DELETE'
+        }).then(response => {
+            dispatch(deleteTenantSuccess(email, apartmentId))
+        }).catch(error => {
+            alert(error.message)
+            dispatch(deleteTenantFailed())
+        })
+
+    }
+}
+export const deleteTenantSuccess = (email, apartmentId) => {
+    return {
+        type: 'DELETE_TENANT_SUCCESS',
+        email: email,
+        apartmentId: apartmentId
+    }
+
+}
+export const deleteTenantFailed = () => {
+    return {
+        type: 'DELETE_TENANT_FAILED'
+    }
+
 }
 export const addTenantSuccess = (values) => {
     return {
-        type : 'ADD_TENANT_SUCCESS',
-        obj : values
+        type: 'ADD_TENANT_SUCCESS',
+        obj: values
     }
-    
+
 }
 export const addTenantFailed = () => {
     return {
-        type : 'ADD_TENANT_FAILED'
+        type: 'ADD_TENANT_FAILED'
     }
-    
+
 }
 
-export const  getAllTenants = (apartmentId) => {
+export const getAllTenants = (apartmentId) => {
     return (dispatch) => {
         var url = `http://localhost:8080/getTenants/${apartmentId}`
-       fetch(url, {
+        fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         }).then(response => response.json()).then(
-          responseData => {
+            responseData => {
                 console.log(responseData)
-               // dispatch(updateUserData(responseData))
-          }
+                // dispatch(updateUserData(responseData))
+            }
         )
-        .catch(error => {
-            alert('Error Occurred while fetching user Data')
-        })
+            .catch(error => {
+                alert('Error Occurred while fetching user Data')
+            })
 
-    } 
+    }
 }
- 
-    
+

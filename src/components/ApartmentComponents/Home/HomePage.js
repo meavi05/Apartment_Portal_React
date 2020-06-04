@@ -1,55 +1,30 @@
 import React, { useState } from 'react'
-import { TenantForm, ApartmentForm, Apartments, Tenants, actions } from './../../ImportComponents'
+import ApartmentOwner from './../../../static/Avinash.jpg'
+import { TenantForm, ApartmentForm, Apartments, SubmitFormUtility } from './../../ImportComponents'
 import { Button, Row, Col, Card } from 'react-bootstrap'
-import { ButtonGroup, Breadcrumb, BreadcrumbItem } from 'reactstrap'
+import { ButtonGroup } from 'reactstrap'
 import { connect, useDispatch } from 'react-redux'
 
 const HomePage = (props) => {
     console.log('RENDERING HOMEPAGE')
     const [rSelected, setRSelected] = useState(null);
-    const [showTenants, setShowTenants] = useState(false)
-    const [showApartment, setShowApartment] = useState(true)
-    const [tenants, setTenants] = useState([])
-    const [apartment, setApartment] = useState()
 
     const dispatch = useDispatch()
-    const submitForm = (identifier, values) => {
-        switch (identifier) {
-            case 'AddApartment': {
-                console.log(values)
-                let user = {
-                    userId: props.userDetail.userId,
-                    userName: props.userDetail.userName,
-                    email: props.userDetail.email
-                }
-                let updatedObj = { ...values, user }
-                console.log(updatedObj)
-                setRSelected(null) //If I put this after dispatch it is not working
-                dispatch(actions.addApartmentAction(updatedObj))
-                break;
-            }
-            case 'AddTenant': {
-                let apartment = { apartmentId: values.apartmentName }
-                let updatedObj = { ...values, apartment }
-                setRSelected(null)
-                dispatch(actions.addTenantAction(updatedObj))
-                setTenants([...tenants, values])
-                break;
-            }
-            default: break;
-        }
-    }
-
+    const submitForm = (identifier, values) => SubmitFormUtility(props, identifier, values, dispatch)
     const onClickHandler = (element) => {
         switch (element) {
             case 'showAddApartment': {
-                // setShowAddApartment(true)
-                setRSelected(1)
+                if (!rSelected || rSelected === 2)
+                    setRSelected(1)
+                else
+                    setRSelected(null)
                 break;
             }
             case 'showAddTenant': {
-                // setShowAddTenant(true)
-                setRSelected(2)
+                if (!rSelected || rSelected === 1)
+                    setRSelected(2)
+                else
+                    setRSelected(null)
                 break;
             }
             default:
@@ -57,21 +32,12 @@ const HomePage = (props) => {
                 break;
         }
     }
-    const loadTenants = (apartmentId) => {
-        let apartment = props.userDetail.apartments.find(apartment => apartment.apartmentId === apartmentId)
-        setShowTenants(true)
-        setShowApartment(false)
-        setApartment(apartment)
-        setTenants(apartment.testtenants)
-        console.log(tenants)
-    }
     return (
-        <Row>
-            <Col md="3">
-                <Card style={{ width: '5rem', height: '5rem' }}>
-                    <Card.Img variant="top" width={50} height={50} />
-                </Card>
-                <h3>Welcome {props.userDetail.userName}..!</h3>
+        <Row height="100%">
+            <Col md="3" style={{ color: 'white' }}>
+                <img src={ApartmentOwner} alt="ApartmentOwner" width="50" height="50" style={{ borderRadius: '100%', padding: '2px', background: 'white' }} />
+
+                <h3 style={{ color: 'white' }}>Welcome {props.userDetail.userName}..!</h3>
                 <ButtonGroup>
                     <Button variant="outline-warning" onClick={() => onClickHandler('showAddApartment')} active={rSelected === 1}>Add Apartment </Button >
                     <Button variant="outline-warning" onClick={() => onClickHandler('showAddTenant')} active={rSelected === 2}>Add Tenant  </Button >
@@ -81,38 +47,27 @@ const HomePage = (props) => {
                     onSubmit={(values) => submitForm('AddApartment', values)}>
                 </ApartmentForm>
                 <TenantForm
+                    isAddForm={true}
                     apartments={props.userDetail.apartments}
                     show={rSelected === 2}
                     onSubmit={(values) => submitForm('AddTenant', values)}>
                 </TenantForm>
             </Col>
             <Col style={{ backgroundColor: 'darkorange' }}>
-                <div className="d-flex flex-row" style={{ backgroundColor: 'darkorange' }}>
-                    <div style={{ backgroundColor: 'darkorange' }} >
-                        <h2>Your Data : </h2>
-                        <label><b>Your Email : {props.userDetail.email}</b></label><br></br>
-                        <label><b>Your Mobile : {props.userDetail.mobile}</b></label><br></br>
-                        <label><b>Your DOB : {props.userDetail.dob}</b></label><br></br>
-                    </div>
-                </div>
-
-                <Breadcrumb tag="nav" className="relay-breadcrumb">
-                    <BreadcrumbItem tag="a" href="#"
-                        onClick={() => { setShowApartment(true); setShowTenants(false) }}>Apartments</BreadcrumbItem>
-                    {showTenants ? <BreadcrumbItem tag="a" href="#">Tenants</BreadcrumbItem> : null}
-                    <BreadcrumbItem active ></BreadcrumbItem>
-                </Breadcrumb>
-
+                <Card style={{ backgroundColor: 'darkorange', width: '25rem', height: '11rem' }}>
+                    <Card.Body>
+                        <Card.Title>Your Data</Card.Title>
+                        <Card.Text>
+                            <label><b>Your Email : {props.userDetail.email}</b></label><br></br>
+                            <label><b>Your Mobile : {props.userDetail.mobile}</b></label><br></br>
+                            <label><b>Your DOB : {props.userDetail.dob}</b></label><br></br>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
                 <Apartments
-                    show={showApartment}
-                    apartments={props.userDetail.apartments}
-                    loadTenants={loadTenants}>
+                    show={true}
+                    apartments={props.userDetail.apartments}>
                 </Apartments>
-                <Tenants
-                    show={showTenants}
-                    tenants={tenants}
-                    apartmentName={apartment && apartment.apartmentName}>
-                </Tenants>
             </Col>
         </Row>
     )

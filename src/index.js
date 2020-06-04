@@ -5,6 +5,7 @@ import thunk from 'redux-thunk'
 import appReducer from './store/reducer'
 import { Provider }  from 'react-redux'
 import { reducer as formReducer} from 'redux-form'
+import './index.css'
 
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';

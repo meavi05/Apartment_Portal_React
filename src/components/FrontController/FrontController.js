@@ -2,23 +2,29 @@ import React, { Component } from "react";
 import Apartment1 from './../../static/apartment1.jpg'
 import Apartment2 from './../../static/apartment2.jpg'
 import Apartment3 from './../../static/apartment3.jpg'
-import { Info, SignUp, Login, HomePage, actions } from '../ImportComponents.js'
-import { Alert,Container, Row, Col, Button,Carousel } from 'react-bootstrap'
+import { Info, SignUp, Login, HomePage, actions, ApartmentDetails } from '../ImportComponents.js'
+import { Alert, Container, Row, Col, Carousel, Navbar, Nav } from 'react-bootstrap'
 import { connect } from 'react-redux'
+import { Route, Switch, Link } from "react-router-dom";
 
 
 class FrontController extends Component {
     state = {
         showLogin: false,
-        showHome: false,
-        findItem: false,
         showSignUp: false
     }
     handleShow = (element) => this.setState({ ...this.state, [element]: true });
     handleCloseLogin = (element) => this.setState({ [element]: false })
     authorizeUserMethod = (email, password) => {
         this.props.authorizeUserHandler(email, password);
+        console.log(this)
+        this.props.history.push('/home')
     }
+    logOutAction = () => {
+        this.props.logOutAction();
+        this.props.history.push('/')
+    }
+    hello() { alert('hello') }
     signUpHandler = (userData) => {
         alert('Front Controller Sign Up Handler')
         console.log(userData)
@@ -36,82 +42,103 @@ class FrontController extends Component {
     render() {
         console.log('RENDERING FRONT CONTROLLER')
         return (
-        <Container fluid>
-            <Row style={{height:"50px"}}>
-                <Col md="7"> <h2 align="center" style={{color:'white'}}>The Apartment Portal</h2></Col>
-                <Col align='right'>
-                        {!this.props.isAuthenticated ? <>
-                            <Button variant="primary" onClick={() => this.handleShow('showLogin')}>Login  </Button>
-                            <Button variant="dark" onClick={() => this.handleShow('showSignUp')}>Sign Up</Button>
-                            <Button variant="warning">Info</Button></>
-                            : <> <Button variant="primary" onClick={() => this.handleShow('showHome')}>Home</Button>
-                                <Button variant="secondary" onClick={() => this.handleShow('findItem')}>Search</Button>
-                                <Button variant="warning">Info</Button>
-                                <Button variant="danger" onClick={this.authorizeUserMethod}>LogOut</Button></>}
-                    </Col>
-                </Row>
-                {!this.props.isAuthenticated ? <Row><Col>
-                 {/* </Col>
-                 <Col> */}
-                 <br></br>
-                 <Alert variant="primary">
-                            The idea behind creating this Apartment Portal is to have the transparency and clear view of the Apartment.
-                 </Alert>
-                 {/* <br></br> */}
-                        <Carousel>
-                            <Carousel.Item>
-                                <img
-                                    src={Apartment1}
-                                    width={800} height={400} alt="400x500"
-                                />
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <img
-                                    src={Apartment2}
-                                    width={800} height={400} alt="400x500"
-                                />
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <img
-                                    src={Apartment3}
-                                    width={800} height={400} alt="400x500"
-                                />
-                            </Carousel.Item>
-                        </Carousel>
-                         <br></br>
-                    </Col><Col><Info/></Col>
-                   
-            </Row>:null
-                }
-            <Row>
-                   <Col>
-                        {!this.props.isAuthenticated ?
-                            <>
-                                {this.state.showSignUp?
-                                    <SignUp
-                                        show={this.state.showSignUp}
-                                        signUpSubmitHandler={(userData) => this.signUpHandler(userData)}
-                                        handleClose={() => { this.handleCloseLogin('showSignUp') }}>
-                                    </SignUp>
-                                :
-                                    null}
-                                {this.state.showLogin?
-                                    <Login
-                                        show={this.state.showLogin}
-                                        handleClose={() => { this.handleCloseLogin('showLogin') }}
-                                        authorizeUser={(email, password) => this.authorizeUserMethod(email, password)}>
-                                    </Login>
-                                :
-                                    null}
+            <Container fluid>
+                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                    <Navbar.Brand href="/">The Apartment Portal</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="ml-auto">
+                            {
+                                !this.props.isAuthenticated ?
+                                    <>
+                                        <Nav.Link style={{ color: 'white' }} onClick={() => this.handleShow('showLogin')}>Login</Nav.Link>
+                                        <Nav.Link style={{ color: 'white' }} onClick={() => this.handleShow('showSignUp')}>Sign Up</Nav.Link>
+                                    </>
+                                    :
+                                    <>
+                                        <Nav.Link style={{ color: 'white' }} as={Link} to='/home'>Home</Nav.Link>
+                                        <Nav.Link style={{ color: 'white' }} as={Link} to='/search'>Search</Nav.Link>
+                                        <Nav.Link style={{ color: 'white' }} as={Link} to='/info'>Info</Nav.Link>
+                                        <Nav.Link style={{ color: 'white' }} onClick={() => this.logOutAction()}>LogOut</Nav.Link>
+                                    </>
+                            }
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
+                {
+                    !this.props.isAuthenticated ?
+                        <Row>
+                            <Col>
+                                <br></br>
+                                <br></br>
+                                <Alert variant="primary">
+                                    The idea behind creating this Apartment Portal is to have the transparency and clear view of the Apartment.
+                                </Alert>
+                                <Carousel>
+                                    <Carousel.Item>
+                                        <img
+                                            src={Apartment1}
+                                            width={800} height={400} alt="400x500"
+                                        />
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <img
+                                            src={Apartment2}
+                                            width={800} height={400} alt="400x500"
+                                        />
+                                    </Carousel.Item>
+                                    <Carousel.Item>
+                                        <img
+                                            src={Apartment3}
+                                            width={800} height={400} alt="400x500"
+                                        />
+                                    </Carousel.Item>
+                                </Carousel>
+                                <br></br>
+                            </Col>
+                            <Col>
+                                <Info />
+                            </Col>
+                            <Col>
+                                <>
+                                    {this.state.showSignUp ?
+                                        <SignUp
+                                            show={this.state.showSignUp}
+                                            signUpSubmitHandler={(userData) => this.signUpHandler(userData)}
+                                            handleClose={() => { this.handleCloseLogin('showSignUp') }}>
+                                        </SignUp>
+                                        :
+                                        null}
+                                    {this.state.showLogin ?
+                                        <Login
+                                            show={this.state.showLogin}
+                                            handleClose={() => { this.handleCloseLogin('showLogin') }}
+                                            authorizeUser={(email, password) => this.authorizeUserMethod(email, password)}>
+                                        </Login>
+                                        :
+                                        null}
                                 </>
-                            :
-                            <div>
-                                <HomePage userDetail={this.props.userDetail}></HomePage>
-                            </div>
-                        }
-                    </Col>
-            </Row>
-        </Container>
+                            </Col>
+                        </Row>
+                        :
+                        <Row>
+                            <Col>
+                                <div>
+                                    <Switch>
+                                        <Route exact path='/home'
+                                            component={(props) => <HomePage {...this.props}></HomePage>}>
+                                        </Route>
+                                        <Route path='/apartment/:apartmentId'
+                                            component={(props) =>
+                                                <ApartmentDetails
+                                                    {...this.props}{...props}></ApartmentDetails>}>
+                                        </Route>
+                                    </Switch>
+                                </div>
+                            </Col>
+                        </Row>
+                }
+            </Container>
 
         );
     }
@@ -124,7 +151,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        authorizeUserHandler: (email, password) => dispatch(actions.authorizeUserAction(email, password))
+        authorizeUserHandler: (email, password) => dispatch(actions.authorizeUserAction(email, password)),
+        logOutAction: () => dispatch(actions.logOutAction())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(FrontController)

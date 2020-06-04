@@ -5,15 +5,13 @@ import FrontController from './components/FrontController/FrontController'
 
 const App = props => {
   return (
-    <div style={{backgroundImage:'linear-gradient(to bottom,#051322,#15457c)',
-    backgroundSize: '100% 475px'}}>
+    // <div style={{backgroundImage:'linear-gradient(to bottom,#051322,#15457c)',height:'100vh'}}>
       <Router>
         <Switch>
-          {/* <Route path = "/home" component ={HomePage}></Route> */}
           <Route path = "/" component ={FrontController}></Route>
         </Switch>
      </Router>
-     </div>
+    //  </div>
   )};
 
 export default App;
