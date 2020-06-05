@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Apartment1 from './../../static/apartment1.jpg'
 import Apartment2 from './../../static/apartment2.jpg'
 import Apartment3 from './../../static/apartment3.jpg'
+import ApartmentLogo from './../../static/apartmentLogo.jpg'
 import { Info, SignUp, Login, HomePage, actions, ApartmentDetails } from '../ImportComponents.js'
 import { Alert, Container, Row, Col, Carousel, Navbar, Nav } from 'react-bootstrap'
 import { connect } from 'react-redux'
@@ -43,37 +44,40 @@ class FrontController extends Component {
         console.log('RENDERING FRONT CONTROLLER')
         return (
             <Container fluid>
-                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                    <Navbar.Brand href="/">The Apartment Portal</Navbar.Brand>
+                <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+                    <Navbar.Brand href="/">
+                        <img align="left" src={ApartmentLogo} width={60} height={60} alt="400x500"></img>
+                    </Navbar.Brand>
+                    <Navbar.Brand href="/" align="Center">
+                        <h2 align="center">The Apartment Portal</h2>
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="ml-auto">
                             {
                                 !this.props.isAuthenticated ?
                                     <>
-                                        <Nav.Link style={{ color: 'white' }} onClick={() => this.handleShow('showLogin')}>Login</Nav.Link>
-                                        <Nav.Link style={{ color: 'white' }} onClick={() => this.handleShow('showSignUp')}>Sign Up</Nav.Link>
+                                        <Nav.Link style={{ color: 'black' }} onClick={() => this.handleShow('showLogin')}>Login</Nav.Link>
+                                        <Nav.Link style={{ color: 'black' }} onClick={() => this.handleShow('showSignUp')}>Sign Up</Nav.Link>
                                     </>
                                     :
                                     <>
-                                        <Nav.Link style={{ color: 'white' }} as={Link} to='/home'>Home</Nav.Link>
-                                        <Nav.Link style={{ color: 'white' }} as={Link} to='/search'>Search</Nav.Link>
-                                        <Nav.Link style={{ color: 'white' }} as={Link} to='/info'>Info</Nav.Link>
-                                        <Nav.Link style={{ color: 'white' }} onClick={() => this.logOutAction()}>LogOut</Nav.Link>
+                                        <Nav.Link style={{ color: 'black' }} as={Link} to='/home'>Home</Nav.Link>
+                                        <Nav.Link style={{ color: 'black' }} as={Link} to='/search'>Search</Nav.Link>
+                                        <Nav.Link style={{ color: 'black' }} as={Link} to='/info'>Info</Nav.Link>
+                                        <Nav.Link style={{ color: 'black' }} onClick={() => this.logOutAction()}>LogOut</Nav.Link>
                                     </>
                             }
                         </Nav>
                     </Navbar.Collapse>
-                </Navbar>
+                </Navbar><br></br>
                 {
                     !this.props.isAuthenticated ?
                         <Row>
                             <Col>
                                 <br></br>
                                 <br></br>
-                                <Alert variant="primary">
-                                    The idea behind creating this Apartment Portal is to have the transparency and clear view of the Apartment.
-                                </Alert>
+
                                 <Carousel>
                                     <Carousel.Item>
                                         <img
@@ -94,6 +98,9 @@ class FrontController extends Component {
                                         />
                                     </Carousel.Item>
                                 </Carousel>
+                                <Alert variant="primary">
+                                    The idea behind creating this Apartment Portal is to have the transparency and clear view of the Apartment.
+                                </Alert>
                                 <br></br>
                             </Col>
                             <Col>
