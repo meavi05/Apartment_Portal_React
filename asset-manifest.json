@@ -1,21 +1,22 @@
 {
   "files": {
-    "main.css": "/react-hook/static/css/main.f558960b.chunk.css",
-    "main.js": "/react-hook/static/js/main.a00c6498.chunk.js",
-    "main.js.map": "/react-hook/static/js/main.a00c6498.chunk.js.map",
+    "main.css": "/react-hook/static/css/main.3a871197.chunk.css",
+    "main.js": "/react-hook/static/js/main.31613cf6.chunk.js",
+    "main.js.map": "/react-hook/static/js/main.31613cf6.chunk.js.map",
     "runtime~main.js": "/react-hook/static/js/runtime~main.57a484b9.js",
     "runtime~main.js.map": "/react-hook/static/js/runtime~main.57a484b9.js.map",
     "static/css/2.17e5ed98.chunk.css": "/react-hook/static/css/2.17e5ed98.chunk.css",
-    "static/js/2.871dffdf.chunk.js": "/react-hook/static/js/2.871dffdf.chunk.js",
-    "static/js/2.871dffdf.chunk.js.map": "/react-hook/static/js/2.871dffdf.chunk.js.map",
+    "static/js/2.722bf0b4.chunk.js": "/react-hook/static/js/2.722bf0b4.chunk.js",
+    "static/js/2.722bf0b4.chunk.js.map": "/react-hook/static/js/2.722bf0b4.chunk.js.map",
     "index.html": "/react-hook/index.html",
-    "precache-manifest.b07d96813534b7edda0dd32fd08580b9.js": "/react-hook/precache-manifest.b07d96813534b7edda0dd32fd08580b9.js",
+    "precache-manifest.e58b91f141b567a61fdd97eee4dde960.js": "/react-hook/precache-manifest.e58b91f141b567a61fdd97eee4dde960.js",
     "service-worker.js": "/react-hook/service-worker.js",
     "static/css/2.17e5ed98.chunk.css.map": "/react-hook/static/css/2.17e5ed98.chunk.css.map",
-    "static/css/main.f558960b.chunk.css.map": "/react-hook/static/css/main.f558960b.chunk.css.map",
+    "static/css/main.3a871197.chunk.css.map": "/react-hook/static/css/main.3a871197.chunk.css.map",
     "static/media/Avinash.jpg": "/react-hook/static/media/Avinash.f4c91351.jpg",
     "static/media/apartment1.jpg": "/react-hook/static/media/apartment1.3a2a6070.jpg",
     "static/media/apartment2.jpg": "/react-hook/static/media/apartment2.cc04c99f.jpg",
-    "static/media/apartment3.jpg": "/react-hook/static/media/apartment3.a86bd3f8.jpg"
+    "static/media/apartment3.jpg": "/react-hook/static/media/apartment3.a86bd3f8.jpg",
+    "static/media/apartmentLogo.jpg": "/react-hook/static/media/apartmentLogo.880e2256.jpg"
   }
 }
