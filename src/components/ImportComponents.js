@@ -11,7 +11,20 @@ import Login from './FrontController/Login/Login'
 import SignUp from './FrontController/SignUp/SignUp'
 import FindItem from './IngredientComponents/Ingredients/FindItem/FindItem'
 import * as  actions from '../store/action'
+import FindSearch from './ApartmentComponents/FindSearch/FindSearch'
 
 export {
-    Info,HomePage,Login,SignUp,FindItem,actions,ApartmentForm,TenantForm,Apartments,Tenants,ApartmentDetails,SubmitFormUtility
+    Info,
+    HomePage,
+    Login,
+    SignUp,
+    FindItem,
+    actions,
+    ApartmentForm,
+    TenantForm,
+    Apartments,
+    Tenants,
+    ApartmentDetails,
+    SubmitFormUtility,
+    FindSearch
 }
