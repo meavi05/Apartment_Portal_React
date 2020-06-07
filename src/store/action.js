@@ -56,7 +56,7 @@ export const logOutAction = () => {
 }
 export const loadDataForUser = (email) => {
     return (dispatch) => {
-        var url = `http://localhost:8080/getUserData/${email}`
+        var url = `https://apartmentportal.herokuapp.com/getUserData/${email}`
         fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
@@ -78,7 +78,7 @@ export function authorizeUserAction(email, password) {
     return dispatch => {
         // alert('in action')
         var obj = { email: email, password: password }
-        fetch('http://localhost:8080/authorizeUser', {
+        fetch('https://apartmentportal.herokuapp.com/authorizeUser', {
             method: 'POST',
             body: JSON.stringify(obj),
             headers: { 'Content-Type': 'application/json' }
@@ -109,7 +109,7 @@ export const addApartmentAction = (values) => {
     return dispatch => {
         // alert('in action')
         var obj = values
-        fetch('http://localhost:8080/addApartment', {
+        fetch('https://apartmentportal.herokuapp.com/addApartment', {
             method: 'POST',
             body: JSON.stringify(obj),
             headers: { 'Content-Type': 'application/json' }
@@ -127,7 +127,7 @@ export const addTenantAction = (values) => {
     return dispatch => {
         // alert('in action')
         var obj = values
-        fetch('http://localhost:8080/addTenant', {
+        fetch('https://apartmentportal.herokuapp.com/addTenant', {
             method: 'POST',
             body: JSON.stringify(obj),
             headers: { 'Content-Type': 'application/json' }
@@ -142,7 +142,7 @@ export const addTenantAction = (values) => {
 }
 export const deleteTenant = (email, apartmentId) => {
     return dispatch => {
-        fetch(`http://localhost:8080/deleteTenant/${email}`, {
+        fetch(`https://apartmentportal.herokuapp.com/deleteTenant/${email}`, {
             method: 'DELETE'
         }).then(response => {
             dispatch(deleteTenantSuccess(email, apartmentId))
@@ -183,7 +183,7 @@ export const addTenantFailed = () => {
 
 export const getAllTenants = (apartmentId) => {
     return (dispatch) => {
-        var url = `http://localhost:8080/getTenants/${apartmentId}`
+        var url = `https://apartmentportal.herokuapp.com/getTenants/${apartmentId}`
         fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }

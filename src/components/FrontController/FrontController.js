@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import Apartment1 from './../../static/apartment1.jpg'
 import Apartment2 from './../../static/apartment2.jpg'
 import Apartment3 from './../../static/apartment3.jpg'
+import Header from './Header/Header.js'
 import { Info, SignUp, Login, HomePage, actions, ApartmentDetails } from '../ImportComponents.js'
-import { Alert, Container, Row, Col, Carousel, Navbar, Nav } from 'react-bootstrap'
+import { Alert, Container, Row, Col, Carousel } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 
 
 class FrontController extends Component {
@@ -17,7 +18,6 @@ class FrontController extends Component {
     handleCloseLogin = (element) => this.setState({ [element]: false })
     authorizeUserMethod = (email, password) => {
         this.props.authorizeUserHandler(email, password);
-        console.log(this)
         this.props.history.push('/home')
     }
     logOutAction = () => {
@@ -28,7 +28,7 @@ class FrontController extends Component {
     signUpHandler = (userData) => {
         alert('Front Controller Sign Up Handler')
         console.log(userData)
-        fetch('http://localhost:8080/addUser', {
+        fetch('https://apartmentportal.herokuapp.com/addUser', {
             method: 'POST',
             body: JSON.stringify(userData),
             headers: { 'Content-Type': 'application/json' }
@@ -42,38 +42,20 @@ class FrontController extends Component {
     render() {
         console.log('RENDERING FRONT CONTROLLER')
         return (
+
             <Container fluid>
-                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-                    <Navbar.Brand href="/">The Apartment Portal</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="ml-auto">
-                            {
-                                !this.props.isAuthenticated ?
-                                    <>
-                                        <Nav.Link style={{ color: 'white' }} onClick={() => this.handleShow('showLogin')}>Login</Nav.Link>
-                                        <Nav.Link style={{ color: 'white' }} onClick={() => this.handleShow('showSignUp')}>Sign Up</Nav.Link>
-                                    </>
-                                    :
-                                    <>
-                                        <Nav.Link style={{ color: 'white' }} as={Link} to='/home'>Home</Nav.Link>
-                                        <Nav.Link style={{ color: 'white' }} as={Link} to='/search'>Search</Nav.Link>
-                                        <Nav.Link style={{ color: 'white' }} as={Link} to='/info'>Info</Nav.Link>
-                                        <Nav.Link style={{ color: 'white' }} onClick={() => this.logOutAction()}>LogOut</Nav.Link>
-                                    </>
-                            }
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
+                <Header
+                    isAuthenticated={this.props.isAuthenticated}
+                    handleShow={this.handleShow}
+                    logOutAction={this.logOutAction}></Header>
+                <br></br>
                 {
                     !this.props.isAuthenticated ?
                         <Row>
                             <Col>
                                 <br></br>
                                 <br></br>
-                                <Alert variant="primary">
-                                    The idea behind creating this Apartment Portal is to have the transparency and clear view of the Apartment.
-                                </Alert>
+
                                 <Carousel>
                                     <Carousel.Item>
                                         <img
@@ -94,6 +76,9 @@ class FrontController extends Component {
                                         />
                                     </Carousel.Item>
                                 </Carousel>
+                                <Alert variant="primary">
+                                    The idea behind creating this Apartment Portal is to have the transparency and clear view of the Apartment.
+                                </Alert>
                                 <br></br>
                             </Col>
                             <Col>
@@ -155,4 +140,4 @@ const mapDispatchToProps = (dispatch) => {
         logOutAction: () => dispatch(actions.logOutAction())
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(FrontController)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FrontController))
