@@ -11,7 +11,7 @@ class FindSearch extends Component {
         allTenants: [],
         allApartments: []
     }
-    url = `http://localhost:8080/getTenantsData/${this.props.userEmailId}`
+    url = `http://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/getTenantsData/${this.props.userEmailId}`
     radios = [
         { name: 'For Tenants', value: '1' },
         { name: 'For Apartments', value: '2' }
