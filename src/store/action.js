@@ -56,7 +56,7 @@ export const logOutAction = () => {
 }
 export const loadDataForUser = (email) => {
     return (dispatch) => {
-        var url = `http://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/getUserData/${email}`
+        var url = `https://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/getUserData/${email}`
         fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
@@ -78,7 +78,7 @@ export function authorizeUserAction(email, password) {
     return dispatch => {
         // alert('in action')
         var obj = { email: email, password: password }
-        fetch('http://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/authorizeUser', {
+        fetch('https://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/authorizeUser', {
             method: 'POST',
             body: JSON.stringify(obj),
             headers: { 'Content-Type': 'application/json' }
@@ -109,7 +109,7 @@ export const addApartmentAction = (values) => {
     return dispatch => {
         // alert('in action')
         var obj = values
-        fetch('http://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/addApartment', {
+        fetch('https://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/addApartment', {
             method: 'POST',
             body: JSON.stringify(obj),
             headers: { 'Content-Type': 'application/json' }
@@ -127,7 +127,7 @@ export const addTenantAction = (values) => {
     return dispatch => {
         // alert('in action')
         var obj = values
-        fetch('http://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/addTenant', {
+        fetch('https://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/addTenant', {
             method: 'POST',
             body: JSON.stringify(obj),
             headers: { 'Content-Type': 'application/json' }
@@ -142,7 +142,7 @@ export const addTenantAction = (values) => {
 }
 export const deleteTenant = (email, apartmentId) => {
     return dispatch => {
-        fetch(`http://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/deleteTenant/${email}`, {
+        fetch(`https://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/deleteTenant/${email}`, {
             method: 'DELETE'
         }).then(response => {
             dispatch(deleteTenantSuccess(email, apartmentId))
@@ -183,7 +183,7 @@ export const addTenantFailed = () => {
 
 export const getAllTenants = (apartmentId) => {
     return (dispatch) => {
-        var url = `http://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/getTenants/${apartmentId}`
+        var url = `https://apartmentportal-env.eba-rbqy2mr3.ap-southeast-2.elasticbeanstalk.com/getTenants/${apartmentId}`
         fetch(url, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
