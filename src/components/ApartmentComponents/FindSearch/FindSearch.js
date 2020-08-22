@@ -13,8 +13,6 @@ class FindSearch extends Component {
         allTenants: [],
         allApartments: []
     }
-    tempTenants = []
-    tempApartments = []
 
     url = `http://localhost:8080/getTenantsData/${this.props.userEmailId}`
     radios = [
