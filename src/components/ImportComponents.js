@@ -5,6 +5,7 @@ import SubmitFormUtility from './ApartmentComponents/Forms/SubmitForm'
 import Apartments from './ApartmentComponents/Home/Apartments'
 import Tenants from './ApartmentComponents/Home/Tenants'
 import ApartmentDetails from './ApartmentComponents/Home/ApartmentDetails/ApartmentDetails'
+import TenantDetails from './ApartmentComponents/Home/TenantDetails/TenantDetails'
 // import Main from '../Main/main'
 import HomePage from './ApartmentComponents/Home/HomePage'
 import Login from './FrontController/Login/Login'
@@ -26,5 +27,6 @@ export {
     Tenants,
     ApartmentDetails,
     SubmitFormUtility,
-    FindSearch
+    FindSearch,
+    TenantDetails
 }

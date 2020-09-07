@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
-import SearchResult from './SearchResult'
-import Header from './../../FrontController/Header/Header'
-import { Container, Row, Col, Card, ButtonGroup, ToggleButton, Button, Dropdown, FormControl } from 'react-bootstrap'
-import { FaSearch } from 'react-icons/fa'
+import { ButtonGroup, Card, Col, Container, Row, ToggleButton } from 'react-bootstrap'
+import { Menu, MenuItem, Typeahead } from "react-bootstrap-typeahead"
 import { connect } from 'react-redux'
+import Header from './../../FrontController/Header/Header'
+import { TenantDetails } from './../../ImportComponents'
 class FindSearch extends Component {
     state = {
         radioValue: 1,
-        searchString: '',
-        value: '',
-        searchItems: [],
         allTenants: [],
+        searchedItem: null,
         allApartments: []
     }
 
@@ -20,22 +18,6 @@ class FindSearch extends Component {
         { name: 'For Apartments', value: '2' }
     ];
 
-    handleChange = (value) => {
-        this.setState({ searchString: value })
-        if (this.state.radioValue == 1) {
-            this.tempTenants = this.state.allTenants.filter(tenant =>
-                tenant.tenantName.toLowerCase().indexOf(this.state.searchString.toLowerCase()) !== -1)
-        }
-        if (this.state.radioValue == 2) {
-            this.tempApartments = this.state.allApartments.filter(apartment =>
-                apartment.apartmentName.toLowerCase().indexOf(this.state.searchString.toLowerCase()) !== -1)
-        }
-    }
-
-    handleSubmit = () => {
-    }
-
-
     shouldComponentUpdate(nextProps, nextState) {
         console.log('shouldComponentUpdate')
         return true
@@ -43,61 +25,44 @@ class FindSearch extends Component {
 
     componentDidMount = () => {
         fetch(this.url).then(response => response.json()).then(responseData => {
-            this.setState({ allTenants: responseData })
+            const resultSet = responseData.map(data => {
+                const label = data.tenantName;
+                return {
+                    id: data.email,
+                    label,
+                    ...data
+                }
+            })
+            this.setState({ allTenants: resultSet })
             console.log(this.state.allTenants)
         })
         this.setState({ allApartments: this.props.apartments })
     }
 
-    CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-        <a
-            href=""
-            ref={ref}
-            onClick={(e) => {
-                e.preventDefault();
-                onClick(e);
-            }}
-        >
-            {children}
-          &#x25bc;
-        </a>
-    ));
-
-    CustomMenu = React.forwardRef(
-        ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
-
-            return (
-                <div
-                    ref={ref}
-                    style={style}
-                    className={className}
-                    aria-labelledby={labeledBy}
-                >
-                    <FormControl
-                        autoFocus
-                        className="mx-3 my-2 w-auto"
-                        placeholder="Type to filter..."
-                        onChange={(e) => this.setState({ value: e.target.value })}
-                        value={this.state.value}
-                    />
-                    <ul className="list-unstyled">
-                        {React.Children.toArray(children).filter(
-                            (child) =>
-                                !this.state.value || child.props.children.toLowerCase().startsWith(this.state.value),
-                        )}
-                    </ul>
-                </div>
-            );
-        },
-    );
-
+    _renderMenu = (results, menuProps) => {
+        return (
+            <Menu {...menuProps}>
+                {results.map((result, idx) => (
+                    <MenuItem
+                        key={idx}
+                        onClick={() => console.log('click', result), () => this.setState({ searchedItem: result })}
+                        option={result}
+                        position={idx}>
+                        {result.tenantName}
+                    </MenuItem>
+                ))
+                }
+            </Menu>
+        );
+    }
 
     render() {
         return <Container style={{ color: 'white' }} fluid>
             <Header
                 isAuthenticated={true}
                 handleShow={this.handleShow}
-                logOutAction={this.logOutAction}></Header>
+                logOutAction={this.logOutAction}>
+            </Header>
             <Row>
                 <Col>
                     <section className="search">
@@ -118,30 +83,22 @@ class FindSearch extends Component {
                                 ))}
                             </ButtonGroup>
                             <br></br>
-                            <div className="search-input">
-                                {(this.state.radioValue == 1) ?
-                                    <input type="text" placeholder="Search Tenants" style={{ width: '90%' }} onChange={(e) => this.handleChange(e.target.value)} />
-                                    :
-                                    <input type="text" placeholder="Search Apartments" style={{ width: '90%' }} onChange={(e) => this.handleChange(e.target.value)} />
-                                }
-                                <Button variant="light" onClick={this.handleSubmit}>   <FaSearch style={{ color: 'black' }} /></Button>
-                                <br></br>
-
-                            </div>
-                            <Dropdown>
-                                <Dropdown.Toggle as={this.CustomToggle} id="dropdown-custom-components">
-                                    Custom toggle
-                                 </Dropdown.Toggle>
-
-                                <Dropdown.Menu as={this.CustomMenu}>
-                                    <SearchResult
-                                        isForTenant={this.state.radioValue == 1}
-                                        tempTenants={this.tempTenants}
-                                        tempApartments={this.tempApartments} />
-                                </Dropdown.Menu>
-                            </Dropdown>
+                            <Typeahead
+                                {...this.state}
+                                options={this.state.allTenants}
+                                renderMenu={this._renderMenu}
+                            />
                         </Card>
                     </section>
+                </Col>
+                <Col>
+                    <h2>Search Item :</h2>
+                    {
+                        this.state.searchedItem ?
+                            this.state.radioValue === 1 ?
+                                <div style={{ background: 'white' }}><TenantDetails {...this.state.searchedItem}></TenantDetails></div> : null
+                            : null
+                    }
                 </Col>
             </Row>
         </Container>

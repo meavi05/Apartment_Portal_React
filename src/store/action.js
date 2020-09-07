@@ -1,3 +1,4 @@
+
 export const deleteIngredientAction = (id) => {
     return {
         type: 'DELETE_INGREDIENT',
