@@ -9,6 +9,7 @@ class FindSearch extends Component {
         radioValue: 1,
         allTenants: [],
         searchedItem: null,
+        tenantApartment: null,
         allApartments: []
     }
 
@@ -21,6 +22,14 @@ class FindSearch extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         console.log('shouldComponentUpdate')
         return true
+    }
+
+    onClickTenantHandler = (result) => {
+        // var tenantApartment = this.state.allApartments.filter((apartment, idx) => {
+        //     return apartment.id === result.apartmentId
+        // })
+        this.setState({ searchedItem: result })
+
     }
 
     componentDidMount = () => {
@@ -45,7 +54,7 @@ class FindSearch extends Component {
                 {results.map((result, idx) => (
                     <MenuItem
                         key={idx}
-                        onClick={() => console.log('click', result), () => this.setState({ searchedItem: result })}
+                        onClick={(result) => this.onClickTenantHandler(result)}
                         option={result}
                         position={idx}>
                         {result.tenantName}
@@ -92,16 +101,17 @@ class FindSearch extends Component {
                     </section>
                 </Col>
                 <Col>
-                    <h2>Search Item :</h2>
                     {
                         this.state.searchedItem ?
                             this.state.radioValue === 1 ?
-                                <div style={{ background: 'white' }}><TenantDetails {...this.state.searchedItem}></TenantDetails></div> : null
+                                <div style={{ background: 'white' }}>
+                                    <h5 style={{ color: 'black' }}>Searched Item :</h5>
+                                    <TenantDetails apartment={this.state.tenantApartment} {...this.state.searchedItem}></TenantDetails></div> : null
                             : null
                     }
                 </Col>
             </Row>
-        </Container>
+        </Container >
     }
 }
 const mapStateToProps = (state) => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'react-bootstrap'
+import { Table, Card } from 'react-bootstrap'
 import "./TenantDetails.css"
 const TenantDetails = function (props) {
     console.log(props)
@@ -9,11 +9,15 @@ const TenantDetails = function (props) {
                 <td>
                     <img alt='Profile' className="tenantDetails" src={require(`../../../../static/${props.tenantName}.jpg`)} ></img>
                 </td>
-            </tr>
-            <tr>
-                <td> {props.tenantName}</td>
-                <td> {props.email}</td>
-                <td> {props.mobile}</td>
+                <td>
+                    <Card>
+                        <b>
+                            {props.tenantName}<br></br>
+                            {props.email}<br></br>
+                        </b>
+                        <i> {props.mobile}</i>
+                    </Card>
+                </td>
             </tr>
         </Table>
 
