@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 import CustomModal from '../../UI/CustomModal'
-import Classes from '../SignUp/SignUp.module.css'
 
 class SignUp extends Component {
     state = {
@@ -18,97 +17,25 @@ class SignUp extends Component {
         isUserNameErrorMessage: '',
         isEmailIdValid: true,
         isEmailIdValidErrorMessage: '',
+        validated: false
+
 
     }
 
-    checkValid = (identifier, value) => {
-        switch (identifier) {
-            case 'userName': {
-                if (value) {
-                    this.setState({
-                        userName: value,
-                        isUserNameValid: true,
-                        isUserNameErrorMessage: ''
-                    })
-                } else {
-                    this.setState({
-                        userName: value,
-                        isUserNameValid: false,
-                        isUserNameErrorMessage: 'Please enter the User Name.'
-                    })
-                }
-                break;
-            }
-            case 'password': {
-                if (value) {
-                    this.setState({
-                        password: value
-                    })
-                }
-                break;
-            }
-
-            case 'emailId': {
-                const pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-                const result = pattern.test(value);
-                if (result) {
-                    this.setState({
-                        emailId: value,
-                        isEmailIdValid: true,
-                        isEmailIdValidErrorMessage: ''
-                    })
-                } else {
-                    this.setState({
-                        emailId: value,
-                        isEmailIdValid: false,
-                        isisEmailIdValidMessage: 'Please enter the User Name.'
-                    })
-                }
-                break;
-            }
-            case 'mobile': {
-                if (value) {
-                    this.setState({
-                        mobile: value
-                    })
-                }
-                break;
-            }
-            case 'dob': {
-                if (value) {
-                    this.setState({
-                        dob: value
-                    })
-                }
-                break;
-            }
-
-            case 'gender': {
-                if (value) {
-                    this.setState({
-                        gender: value
-                    })
-                }
-                break;
-            }
-            case 'userType': {
-                if (value) {
-                    this.setState({
-                        userType: value
-                    })
-                }
-                break;
-            }
-            default: break;
-        }
-
-    }
     onChangeHandler = (identifier, event) => {
-        this.checkValid(identifier, event.target.value)
     }
 
     onSubmitHandler = (e) => {
-        e.preventDefault();
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.setState({
+                validated: true
+            })
+            return
+        }
+
         alert('Submitted')
         var userData = {
             userName: this.state.userName,
@@ -126,68 +53,78 @@ class SignUp extends Component {
         console.log("Rendering SignUp")
 
 
-        const form = (<form className={Classes.SignUp} onSubmit={this.onSubmitHandler}>
-            <input name='userName' type="text" placeholder='UserName' onChange={this.onChangeHandler.bind(this, 'userName')}></input>
-            {!this.state.isUserNameValid ? <label style={{ color: "red" }}>{this.state.isUserNameErrorMessage}</label> : null}
-            <input name='password' type="text" placeholder='password' onChange={this.onChangeHandler.bind(this, 'password')}></input>
-            <input name='email' type="email" placeholder='Email' onChange={(e) => this.onChangeHandler('emailId', e)}></input>
-            {!this.state.isEmailIdValid ? <label style={{ color: "red" }}>{this.state.isEmailIdValidErrorMessage}</label> : null}
-            <input name='mobile' type="text" placeholder='Mobile' onChange={this.onChangeHandler.bind(this, 'mobile')}></input>
-            <ul>
-                <input
-                    name="gender"
-                    type="radio"
-                    value='female'
-                    onChange={this.onChangeHandler.bind(this, 'gender')}
-                    checked={this.state.gender === 'female'}
-                />
-                <label htmlFor="female">
-                    <b>Female</b>
-                </label>
-                <input
-                    name="gender"
-                    type="radio"
-                    value='male'
-                    checked={this.state.gender === 'male'}
-                    onChange={this.onChangeHandler.bind(this, 'gender')}
-                /><label htmlFor="male">
-                    <b>Male</b>
-                </label>
-            </ul>
-            <ul>
-                <input
-                    name="tenant"
-                    type="radio"
-                    value='tenant'
-                    checked={this.state.userType === 'tenant'}
-                    onChange={this.onChangeHandler.bind(this, 'userType')}
-                />
-                <label htmlFor="tenant">
-                    <b>Tenant</b>
-                </label>
-                <input
-                    name="owner"
-                    type="radio"
-                    value='owner'
-                    checked={this.state.userType === 'owner'}
-                    onChange={this.onChangeHandler.bind(this, 'userType')}
-                />
-                <label htmlFor="owner">
-                    <b>Owner</b>
-                </label>
-                </ul>
-                <input name='dob' type="date" onChange={this.onChangeHandler.bind(this, 'dob')}></input><br></br>
-                <select>
-                    <option value='' disabled defaultValue>Select Your Country</option>
-                    <option value=''>India</option>
-                    <option value=''>Australia</option>
-                    <option value=''>England</option>
-                </select> <br></br>
-                <Button type="submit">Submit</Button>
+        const form = (<Form noValidate validated={this.state.validated} onSubmit={this.onSubmitHandler}>
+            <Form.Group>
+                <Form.Row>
+                    <Form.Control
+                        required
+                        type="text"
+                        placeholder="user name"
+                        name="userName"
+                        onChange={this.onChangeHandler.bind(this, 'userName')} />
+                </Form.Row>
+                <Form.Row>
+                    <Form.Control
+                        required
+                        type="password"
+                        placeholder="password"
+                        name="password"
+                        onChange={this.onChangeHandler.bind(this, 'password')} />
+                </Form.Row>
+                <Form.Row>
+                    <Form.Control
+                        required
+                        type="email"
+                        placeholder="email"
+                        name="email"
+                        onChange={this.onChangeHandler.bind(this, 'emailId')} />
+                </Form.Row>
+                <Form.Row>
+                    <Form.Control
+                        required
+                        type="number"
+                        placeholder="mobile"
+                        name="mobile"
+                        onChange={this.onChangeHandler.bind(this, 'mobile')} />
+                </Form.Row>
+                <Form.Row>
+                    <Form.Check
+                        name="gender"
+                        checked
+                        inline label="Female"
+                        type="radio"
+                        onChange={this.onChangeHandler.bind(this, 'gender')} />
+                    <Form.Check
+                        name="gender"
+                        inline label="Male"
+                        type="radio"
+                        onChange={this.onChangeHandler.bind(this, 'gender')} />
+                </Form.Row>
+                <Form.Row>
+                    <Form.Control
+                        required
+                        type="date"
+                        placeholder="date of birth"
+                        name="dob"
+                        onChange={this.onChangeHandler.bind(this, 'dob')} />
+                </Form.Row>
+                <Form.Row>
+                    <Form.Control
+                        required
+                        as="select">
+                        <option value='' default>choose your country...</option>
+                        <option value=''>Australia</option>
+                        <option value=''>India</option>
+                        <option value=''>England</option>
+                    </Form.Control>
+                </Form.Row>
+                <Form.Row>
+                    <Button type="submit">Submit</Button>
+                </Form.Row>
 
-        </form>);
+            </Form.Group></Form>);
         return (
-            <CustomModal title='Sign Up' Body={form} show={this.props.show} handleClose={this.props.handleClose}></CustomModal>)
+            <CustomModal title='Register' Body={form} show={this.props.show} handleClose={this.props.handleClose}></CustomModal>)
     }
 }
 export default SignUp

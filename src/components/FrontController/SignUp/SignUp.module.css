@@ -3,12 +3,14 @@
 }
 .SignUp input {
     width: 60%;
-    padding: 10px 10px;
-    margin: 5px 0;
-  box-sizing: border-box;
+    padding: 5px;
+    margin: 2px 0;
+    box-sizing: border-box;
+    background-color: rgb(250, 249, 249);
 }
 .SignUp input :focus-within {
-    border: 3px solid #555;
+    border: 2px solid #555;
+    background-color: #4CAF50;
 }
 
 .SignUp input[type=radio] {
@@ -24,7 +26,7 @@
 
 .SignUp select {
     width: 60%;
-    padding: 10px 10px;
-    margin: 5px 0;
+    padding: 5px;
+    margin: 2px 0;
   box-sizing: border-box;
 }

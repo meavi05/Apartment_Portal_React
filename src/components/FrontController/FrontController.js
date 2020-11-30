@@ -82,7 +82,9 @@ class FrontController extends Component {
                                 <br></br>
                             </Col>
                             <Col>
-                                <Info />
+                                <Info
+                                    handleShow={this.handleShow}
+                                    authorizeUser={(email, password) => this.authorizeUserMethod(email, password)} />
                             </Col>
                             <Col>
                                 <>
@@ -92,14 +94,6 @@ class FrontController extends Component {
                                             signUpSubmitHandler={(userData) => this.signUpHandler(userData)}
                                             handleClose={() => { this.handleCloseLogin('showSignUp') }}>
                                         </SignUp>
-                                        :
-                                        null}
-                                    {this.state.showLogin ?
-                                        <Login
-                                            show={this.state.showLogin}
-                                            handleClose={() => { this.handleCloseLogin('showLogin') }}
-                                            authorizeUser={(email, password) => this.authorizeUserMethod(email, password)}>
-                                        </Login>
                                         :
                                         null}
                                 </>

@@ -16,7 +16,7 @@ const Header = (props) => {
                         !props.isAuthenticated ?
                             <>
                                 <Nav.Link style={{ color: 'black' }} onClick={() => props.handleShow('showLogin')}>Login</Nav.Link>
-                                <Nav.Link style={{ color: 'black' }} onClick={() => props.handleShow('showSignUp')}>Sign Up</Nav.Link>
+                                <Nav.Link style={{ color: 'black' }} onClick={() => props.handleShow('showSignUp')}>Register</Nav.Link>
                             </>
                             :
                             <>
