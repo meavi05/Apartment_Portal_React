@@ -1,4 +1,4 @@
-import Info from './ApartmentComponents/Info/Info'
+import Authenticator from './ApartmentComponents/Authenticator/Authenticator'
 import ApartmentForm from './ApartmentComponents/Forms/ApartmentForm'
 import TenantForm from './ApartmentComponents/Forms/TenantForm'
 import SubmitFormUtility from './ApartmentComponents/Forms/SubmitForm'
@@ -9,16 +9,17 @@ import TenantDetails from './ApartmentComponents/Home/TenantDetails/TenantDetail
 // import Main from '../Main/main'
 import HomePage from './ApartmentComponents/Home/HomePage'
 import Login from './FrontController/Login/Login'
-import SignUp from './FrontController/SignUp/SignUp'
+import Register from './FrontController/Register/Register'
 import FindItem from './IngredientComponents/Ingredients/FindItem/FindItem'
 import * as  actions from '../store/action'
 import FindSearch from './ApartmentComponents/FindSearch/FindSearch'
+import MovingCarousel from '../components/UI/MovingCarousel'
 
 export {
-    Info,
+    Authenticator,
     HomePage,
     Login,
-    SignUp,
+    Register,
     FindItem,
     actions,
     ApartmentForm,
@@ -28,5 +29,6 @@ export {
     ApartmentDetails,
     SubmitFormUtility,
     FindSearch,
-    TenantDetails
+    TenantDetails,
+    MovingCarousel
 }

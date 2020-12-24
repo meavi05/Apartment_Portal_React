@@ -1,4 +1,8 @@
 
+import axios from 'axios'
+import customAxios from './../utils/customAxios'
+//import jwtDecode from 'jwt-decode';
+
 export const deleteIngredientAction = (id) => {
     return {
         type: 'DELETE_INGREDIENT',
@@ -28,9 +32,11 @@ export const updateIngredientsAction = (id, receivedIngredients) => {
     }
 }
 
-export const authorizeUserSuccess = (email) => {
+export const authorizeUserSuccess = (token) => {
+    localStorage.setItem('token', token);
     return {
-        type: 'AUTHORIZE_USER_SUCCESS'
+        type: 'LOGIN_USER_SUCCESS',
+        token: token
     }
 }
 export const authorizeUserFailed = () => {
@@ -52,21 +58,18 @@ export const updateTenant = (tenantData) => {
 }
 export const logOutAction = () => {
     return {
-        type: 'LOGOUT_ACTION'
+        type: 'LOGOUT_USER'
     }
 }
 export const loadDataForUser = (email) => {
     return (dispatch) => {
         var url = `http://localhost:8080/getUserData/${email}`
-        fetch(url, {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-        }).then(response => response.json()).then(
-            responseData => {
-                console.log(responseData)
-                dispatch(updateUserData(responseData))
+        customAxios.get(url)
+            .then(response => {
+                console.log(response.data)
+                dispatch(updateUserData(response.data))
             }
-        )
+            )
             .catch(error => {
                 alert('Error Occurred while fetching user Data')
             })
@@ -74,25 +77,42 @@ export const loadDataForUser = (email) => {
     }
 }
 
+export const registerUser = (userData) => {
+    console.log('Register new user.. ' + userData)
+    fetch('http://localhost:8080/addUser', {
+        method: 'POST',
+        body: JSON.stringify(userData),
+        headers: { 'Content-Type': 'application/json' }
+    }).then(response => response.json()).then(responseData => {
+        console.log('Success')
+    }).catch(error => {
+        alert(error.message)
+    })
+}
+
+
 export function authorizeUserAction(email, password) {
-    // return function(dispatch){
+    const params = new URLSearchParams({
+        email: email,
+        password: password
+    }).toString();
+
+    const url = "http://localhost:8080/login?" + params;
+    var data = {};
     return dispatch => {
-        // alert('in action')
-        var obj = { email: email, password: password }
-        fetch('http://localhost:8080/authorizeUser', {
-            method: 'POST',
-            body: JSON.stringify(obj),
-            headers: { 'Content-Type': 'application/json' }
+        axios.post(url, data, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
         }).then(response => {
-            dispatch(authorizeUserSuccess())
+            // let decodedToken = jwtDecode(response.data);
+            dispatch(authorizeUserSuccess(response.data))
             dispatch(loadDataForUser(email))
         }).catch(error => {
-            alert(error.message)
-            dispatch(authorizeUserFailed)
+            console.log(error.response)
+            dispatch(authorizeUserFailed())
         })
-
     }
-
 }
 export const addApartmentSuccess = (obj) => {
     return {

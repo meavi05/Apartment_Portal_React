@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import CustomModal from '../../UI/CustomModal'
 
-class SignUp extends Component {
+class Register extends Component {
     state = {
         userName: '',
         emailId: '',
         mobile: '',
         dob: '',
-        gender: '',
+        gender: 'F',
         country: '',
         password: '',
         userType: '',
@@ -18,17 +18,17 @@ class SignUp extends Component {
         isEmailIdValid: true,
         isEmailIdValidErrorMessage: '',
         validated: false
-
-
     }
-
-    onChangeHandler = (identifier, event) => {
+    onChangeHandler = (evt) => {
+        const value = evt.target.value;
+        this.setState({
+            [evt.target.name]: value
+        });
     }
-
     onSubmitHandler = (e) => {
+        e.preventDefault();
         const form = e.currentTarget;
         if (form.checkValidity() === false) {
-            e.preventDefault();
             e.stopPropagation();
             this.setState({
                 validated: true
@@ -36,7 +36,6 @@ class SignUp extends Component {
             return
         }
 
-        alert('Submitted')
         var userData = {
             userName: this.state.userName,
             email: this.state.emailId,
@@ -50,7 +49,7 @@ class SignUp extends Component {
         this.props.signUpSubmitHandler(userData);
     }
     render() {
-        console.log("Rendering SignUp")
+        console.log("Rendering Register..")
 
 
         const form = (<Form noValidate validated={this.state.validated} onSubmit={this.onSubmitHandler}>
@@ -61,7 +60,7 @@ class SignUp extends Component {
                         type="text"
                         placeholder="user name"
                         name="userName"
-                        onChange={this.onChangeHandler.bind(this, 'userName')} />
+                        onChange={this.onChangeHandler.bind(this)} />
                 </Form.Row>
                 <Form.Row>
                     <Form.Control
@@ -69,15 +68,15 @@ class SignUp extends Component {
                         type="password"
                         placeholder="password"
                         name="password"
-                        onChange={this.onChangeHandler.bind(this, 'password')} />
+                        onChange={this.onChangeHandler.bind(this)} />
                 </Form.Row>
                 <Form.Row>
                     <Form.Control
                         required
                         type="email"
                         placeholder="email"
-                        name="email"
-                        onChange={this.onChangeHandler.bind(this, 'emailId')} />
+                        name="emailId"
+                        onChange={this.onChangeHandler.bind(this)} />
                 </Form.Row>
                 <Form.Row>
                     <Form.Control
@@ -85,20 +84,23 @@ class SignUp extends Component {
                         type="number"
                         placeholder="mobile"
                         name="mobile"
-                        onChange={this.onChangeHandler.bind(this, 'mobile')} />
+                        onChange={this.onChangeHandler.bind(this)} />
                 </Form.Row>
                 <Form.Row>
                     <Form.Check
                         name="gender"
-                        checked
                         inline label="Female"
                         type="radio"
-                        onChange={this.onChangeHandler.bind(this, 'gender')} />
+                        value='F'
+                        checked={this.state.gender === "F"}
+                        onChange={this.onChangeHandler.bind(this)} />
                     <Form.Check
                         name="gender"
                         inline label="Male"
                         type="radio"
-                        onChange={this.onChangeHandler.bind(this, 'gender')} />
+                        value='M'
+                        checked={this.state.gender === "M"}
+                        onChange={this.onChangeHandler.bind(this)} />
                 </Form.Row>
                 <Form.Row>
                     <Form.Control
@@ -106,7 +108,7 @@ class SignUp extends Component {
                         type="date"
                         placeholder="date of birth"
                         name="dob"
-                        onChange={this.onChangeHandler.bind(this, 'dob')} />
+                        onChange={this.onChangeHandler.bind(this)} />
                 </Form.Row>
                 <Form.Row>
                     <Form.Control
@@ -127,4 +129,4 @@ class SignUp extends Component {
             <CustomModal title='Register' Body={form} show={this.props.show} handleClose={this.props.handleClose}></CustomModal>)
     }
 }
-export default SignUp
+export default Register

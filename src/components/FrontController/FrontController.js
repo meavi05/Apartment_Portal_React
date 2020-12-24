@@ -1,14 +1,9 @@
 import React, { Component } from "react";
-import Apartment1 from './../../static/apartment1.jpg'
-import Apartment2 from './../../static/apartment2.jpg'
-import Apartment3 from './../../static/apartment3.jpg'
 import Header from './Header/Header.js'
-import { Info, SignUp, Login, HomePage, actions, ApartmentDetails } from '../ImportComponents.js'
-import { Alert, Container, Row, Col, Carousel } from 'react-bootstrap'
+import { Authenticator, Register, HomePage, actions, ApartmentDetails, MovingCarousel } from '../ImportComponents.js'
+import { Container, Row, Col } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { Route, Switch, withRouter } from "react-router-dom";
-
-
 class FrontController extends Component {
     state = {
         showLogin: false,
@@ -16,37 +11,34 @@ class FrontController extends Component {
     }
     handleShow = (element) => this.setState({ ...this.state, [element]: true });
     handleCloseLogin = (element) => this.setState({ [element]: false })
+    registerUserHandler = (userData) => {
+        this.props.registerUserHandler(userData);
+        this.setState({ showSignUp: false })
+    }
     authorizeUserMethod = (email, password) => {
         this.props.authorizeUserHandler(email, password);
-        this.props.history.push('/home')
+        // if (this.props.isAuthenticated) {
+        //     this.setState({
+        //         invalidUserMessage: null
+        //     })
+        //     this.props.history.push('/home')
+        // }
+        // else {
+        //     this.setState({
+        //         invalidUserMessage: 'Invalid Credentials'
+        //     })
+        // }
     }
     logOutAction = () => {
         this.props.logOutAction();
         this.props.history.push('/')
     }
-    hello() { alert('hello') }
-    signUpHandler = (userData) => {
-        alert('Front Controller Sign Up Handler')
-        console.log(userData)
-        fetch('http://localhost:8080/addUser', {
-            method: 'POST',
-            body: JSON.stringify(userData),
-            headers: { 'Content-Type': 'application/json' }
-        }).then(response => response.json()).then(responseData => {
-            alert('Success')
-            this.setState({ showSignUp: false, showLogin: true })
-        }).catch(error => {
-            alert(error.message)
-        })
-    }
     render() {
         console.log('RENDERING FRONT CONTROLLER')
         return (
-
             <Container fluid>
                 <Header
                     isAuthenticated={this.props.isAuthenticated}
-                    handleShow={this.handleShow}
                     logOutAction={this.logOutAction}></Header>
                 <br></br>
                 {
@@ -55,45 +47,21 @@ class FrontController extends Component {
                             <Col>
                                 <br></br>
                                 <br></br>
-
-                                <Carousel>
-                                    <Carousel.Item>
-                                        <img
-                                            src={Apartment1}
-                                            width={800} height={400} alt="400x500"
-                                        />
-                                    </Carousel.Item>
-                                    <Carousel.Item>
-                                        <img
-                                            src={Apartment2}
-                                            width={800} height={400} alt="400x500"
-                                        />
-                                    </Carousel.Item>
-                                    <Carousel.Item>
-                                        <img
-                                            src={Apartment3}
-                                            width={800} height={400} alt="400x500"
-                                        />
-                                    </Carousel.Item>
-                                </Carousel>
-                                <Alert variant="primary">
-                                    The idea behind creating this Apartment Portal is to have the transparency and clear view of the Apartment.
-                                </Alert>
-                                <br></br>
+                                <MovingCarousel />
                             </Col>
                             <Col>
-                                <Info
+                                <Authenticator
                                     handleShow={this.handleShow}
+                                    invalidUserMessage={this.props.authenticatedFailure}
                                     authorizeUser={(email, password) => this.authorizeUserMethod(email, password)} />
                             </Col>
                             <Col>
                                 <>
                                     {this.state.showSignUp ?
-                                        <SignUp
+                                        <Register
                                             show={this.state.showSignUp}
-                                            signUpSubmitHandler={(userData) => this.signUpHandler(userData)}
-                                            handleClose={() => { this.handleCloseLogin('showSignUp') }}>
-                                        </SignUp>
+                                            signUpSubmitHandler={(userData) => this.registerUserHandler(userData)}
+                                            handleClose={() => { this.handleCloseLogin('showSignUp') }} />
                                         :
                                         null}
                                 </>
@@ -124,13 +92,15 @@ class FrontController extends Component {
 }
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.app.authenicatedUser,
+        isAuthenticated: state.auth.isAuthenticated,
+        authenticatedFailure: state.app.authenticatedFailure,
         userDetail: state.app.userData
     };
 }
 const mapDispatchToProps = (dispatch) => {
     return {
         authorizeUserHandler: (email, password) => dispatch(actions.authorizeUserAction(email, password)),
+        registerUserHandler: (userData) => actions.registerUser(userData),
         logOutAction: () => dispatch(actions.logOutAction())
     }
 }

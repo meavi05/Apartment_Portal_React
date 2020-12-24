@@ -13,18 +13,13 @@ const Header = (props) => {
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="ml-auto">
                     {
-                        !props.isAuthenticated ?
-                            <>
-                                <Nav.Link style={{ color: 'black' }} onClick={() => props.handleShow('showLogin')}>Login</Nav.Link>
-                                <Nav.Link style={{ color: 'black' }} onClick={() => props.handleShow('showSignUp')}>Register</Nav.Link>
-                            </>
-                            :
+                        props.isAuthenticated ?
                             <>
                                 <Nav.Link style={{ color: 'black' }} as={Link} to='/home' active>Home</Nav.Link>
                                 <Nav.Link style={{ color: 'black' }} as={Link} to='/search' active>Search</Nav.Link>
                                 <Nav.Link style={{ color: 'black' }} as={Link} to='/info' active>Info</Nav.Link>
                                 <Nav.Link style={{ color: 'black' }} onClick={() => props.logOutAction()} active>LogOut</Nav.Link>
-                            </>
+                            </> : null
                     }
                 </Nav>
             </Navbar.Collapse>

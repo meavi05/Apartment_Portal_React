@@ -7,7 +7,6 @@ const Login = (props) => {
     const authorizeUser = (e) => {
         e.preventDefault()
         props.authorizeUser(mailId, password)
-        props.handleClose()
     }
     const changeHandler = (e, identifier) => {
         (identifier === "email") ? setEmail(e.target.value) : setPassword(e.target.value)
@@ -38,7 +37,6 @@ const Login = (props) => {
         </p>
     </form>);
     return (
-        // <CustomModal title='Log In' Body={form} show={props.show} handleClose={props.handleClose}></CustomModal>
         <div>{form}</div>
     )
 }

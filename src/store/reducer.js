@@ -3,6 +3,7 @@ const initialState = {
     loading: false,
     error: false,
     authenicatedUser: false,
+    authenticatedFailure: null,
     userData: {
         apartments: []
     },
@@ -34,13 +35,13 @@ const reducer = (state = initialState, action) => {
         }
         case 'AUTHORIZE_USER_SUCCESS': {
 
-            const newState = { ...state, authenicatedUser: true };
+            const newState = { ...state, authenicatedUser: true, authenticatedFailure: null };
             console.log(newState);
             return newState;
         }
         case 'AUTHORIZE_USER_FAILED': {
 
-            const newState = { ...state, authenicatedUser: false };
+            const newState = { ...state, authenicatedUser: false, authenticatedFailure: 'Invalid Credentials' };
             console.log(newState);
             return newState;
         }

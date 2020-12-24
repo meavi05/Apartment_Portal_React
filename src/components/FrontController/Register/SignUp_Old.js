@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import CustomModal from '../../UI/CustomModal'
-import Classes from '../SignUp/SignUp.module.css'
+import Classes from './SignUp.gi.css'
 
 class SignUp extends Component {
     state = {
@@ -175,15 +175,15 @@ class SignUp extends Component {
                 <label htmlFor="owner">
                     <b>Owner</b>
                 </label>
-                </ul>
-                <input name='dob' type="date" onChange={this.onChangeHandler.bind(this, 'dob')}></input><br></br>
-                <select>
-                    <option value='' disabled defaultValue>Select Your Country</option>
-                    <option value=''>India</option>
-                    <option value=''>Australia</option>
-                    <option value=''>England</option>
-                </select> <br></br>
-                <Button type="submit">Submit</Button>
+            </ul>
+            <input name='dob' type="date" onChange={this.onChangeHandler.bind(this, 'dob')}></input><br></br>
+            <select>
+                <option value='' disabled defaultValue>Select Your Country</option>
+                <option value=''>India</option>
+                <option value=''>Australia</option>
+                <option value=''>England</option>
+            </select> <br></br>
+            <Button type="submit">Submit</Button>
 
         </form>);
         return (
