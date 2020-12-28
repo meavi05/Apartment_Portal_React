@@ -10,7 +10,6 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import jwtDecode from 'jwt-decode'
 import * as actions from './store/action'
-import './index.css'
 
 import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';

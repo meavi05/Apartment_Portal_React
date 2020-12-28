@@ -9,9 +9,10 @@ import TenantDetails from './ApartmentComponents/Home/TenantDetails/TenantDetail
 // import Main from '../Main/main'
 import HomePage from './ApartmentComponents/Home/HomePage'
 import Login from './FrontController/Login/Login'
-import Register from './FrontController/Register/Register'
-import FindItem from './IngredientComponents/Ingredients/FindItem/FindItem'
+import RegisterDetails from './FrontController/Register/RegisterDetails'
 import * as  actions from '../store/action'
+import * as  thunkActions from '../store/thunkAction'
+import PrivateRoute from './../utils/PrivateRoute'
 import FindSearch from './ApartmentComponents/FindSearch/FindSearch'
 import MovingCarousel from '../components/UI/MovingCarousel'
 
@@ -19,9 +20,9 @@ export {
     Authenticator,
     HomePage,
     Login,
-    Register,
-    FindItem,
+    RegisterDetails,
     actions,
+    thunkActions,
     ApartmentForm,
     TenantForm,
     Apartments,
@@ -30,5 +31,6 @@ export {
     SubmitFormUtility,
     FindSearch,
     TenantDetails,
-    MovingCarousel
+    MovingCarousel,
+    PrivateRoute
 }

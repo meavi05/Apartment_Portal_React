@@ -1,43 +1,62 @@
 import React, { useState } from 'react'
+import { withRouter } from 'react-router-dom'
+import { Form, Button, Alert } from 'react-bootstrap'
+
+import { thunkActions } from '../../ImportComponents'
+import { connect } from 'react-redux'
+
 
 const Login = (props) => {
-    console.log("Rendering Modal")
+    console.log("Rendering Login")
     const [mailId, setEmail] = useState('meavinash05@gmail.com')
     const [password, setPassword] = useState('')
     const authorizeUser = (e) => {
         e.preventDefault()
         props.authorizeUser(mailId, password)
+        props.history.push('/home');
     }
-    const changeHandler = (e, identifier) => {
-        (identifier === "email") ? setEmail(e.target.value) : setPassword(e.target.value)
+    const changeHandler = (e) => {
+        (e.target.name === "email") ? setEmail(e.target.value) : setPassword(e.target.value)
     }
 
-    const form = (<form>
-        <div className="form-group">
-            <label>Email address</label>
-            <input type="email" defaultValue='meavinash05@gmail.com' className="form-control" placeholder="Enter email" onChange={(e) => changeHandler(e, 'email')} />
-        </div>
-
-        <div className="form-group">
-            <label>Password</label>
-            <input type="password" className="form-control" placeholder="Enter password" onChange={(e) => changeHandler(e, 'password')} />
-        </div>
-
-        <div className="form-group">
-            <div className="custom-control custom-checkbox">
-                <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
-            </div>
-        </div>
-
-        <button type="submit" className="btn btn-primary btn-block"
-            onClick={authorizeUser}><b>Log In</b></button>
-        <p className="forgot-password text-right">
-            <a href="fsak">Forgot password?</a>
-        </p>
-    </form>);
     return (
-        <div>{form}</div>
+        <div>
+            <Form onSubmit={authorizeUser}>
+                <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control type="email" name="email" placeholder="Enter email" onChange={(e) => { changeHandler(e) }} />
+                    <Form.Text className="text-muted">
+                        We'll never share your email with anyone else.
+    </Form.Text>
+                </Form.Group>
+
+                <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" name="password" placeholder="Password" onChange={(e) => { changeHandler(e) }} />
+                </Form.Group>
+                <Form.Group controlId="formBasicCheckbox">
+                    <Form.Check type="checkbox" name="rememberMe" label="Remember me" />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Submit
+  </Button>
+            </Form>
+
+            {props.invalidUserMessage ?
+                <Alert variant="danger" align="center">{props.invalidUserMessage}</Alert> : null}
+        </div>
+
     )
 }
-export default Login
+
+const mapStateToProps = state => {
+    return {
+        authenticatedFailure: state.app.authenticatedFailure
+    };
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        authorizeUser: (email, password) => dispatch(thunkActions.authorizeUserAction(email, password))
+    }
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login))

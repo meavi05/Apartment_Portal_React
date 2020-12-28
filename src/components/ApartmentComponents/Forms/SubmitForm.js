@@ -1,5 +1,5 @@
 
-import { actions } from './../../ImportComponents'
+import { thunkActions } from './../../ImportComponents'
 export default function SubmitForm(props, identifier, values, dispatch) {
     switch (identifier) {
         case 'AddApartment': {
@@ -10,14 +10,13 @@ export default function SubmitForm(props, identifier, values, dispatch) {
             }
             let updatedObj = { ...values, user }
             console.log(updatedObj)
-            dispatch(actions.addApartmentAction(updatedObj))
+            dispatch(thunkActions.addApartmentAction(updatedObj))
             break;
         }
         case 'AddTenant': {
             let apartment = { apartmentId: values.apartmentName }
             let updatedObj = { ...values, apartment }
-            dispatch(actions.addTenantAction(updatedObj))
-            dispatch(actions.updateTenant({}))
+            dispatch(thunkActions.addTenantAction(updatedObj))
             break;
         }
         default: break;
